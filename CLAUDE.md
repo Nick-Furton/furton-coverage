@@ -36,6 +36,16 @@ Read PLAN.md before doing anything — it defines the phases, session pairings, 
 - Site preview: port **8802** (8801, 8899, 8765 are taken by other Furton projects).
 - Every published page carries the educational / not-investment-advice disclaimer.
 
+## Quality toolkit (use these, don't just know about them)
+
+- Wrote script/pipeline code this session? Run **/code-review** on your diff before the final
+  commit, and use the **verify** skill to exercise what you built end-to-end — run it for real,
+  don't just eyeball it.
+- Publishing a note? It must pass the **adversarial fact-check workflow** (parallel agents
+  re-verify every numeric claim against its cited source) built into the /preview /flash
+  /review /digest skills. No note goes public unchecked.
+- Building or changing a project slash command? Use the **skill-creator** skill.
+
 ## Environment notes (Windows)
 
 - Python: run via `py`; set `PYTHONUTF8=1` (console is cp1252 — ✓/→ symbols crash otherwise).

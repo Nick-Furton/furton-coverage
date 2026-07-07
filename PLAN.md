@@ -158,7 +158,8 @@ fine, but pick one deliberately and note it in the README.
 run refresh_calendar.py, commit. *Universe is now frozen; changes require a dated note.*
 Also rule on the ToS finding: write one line in CLAUDE.md stating exactly what Daloopa content
 may appear in public files (full models / derived tables only / screenshots only) — every later
-session obeys that line without re-deciding.
+session obeys that line without re-deciding. Finally, run the fewer-permission-prompts skill —
+eight more sessions run in this repo and every permission nag is paid eight times.
 
 ---
 
@@ -178,7 +179,13 @@ session obeys that line without re-deciding.
 > (daloopa:earnings-prep + web search restricted to pre-print dates), then its flash and review
 > from the actual results. This validates the templates against reality. Package the repeatable
 > procedure as three project slash commands (skills): /preview <TICKER>, /flash <TICKER>,
-> /review <TICKER>. Do NOT touch scorecard/ or scripts/. Commit as [S3], push, append a handoff.
+> /review <TICKER> — build them with the skill-creator skill so they're properly structured and
+> testable. Bake a PUBLISH GATE into each skill: before a note is saved as final, the skill
+> instructs running an adversarial fact-check workflow — parallel agents re-verify every
+> numeric claim in the note against its cited source and try to refute the qualitative call;
+> anything unverifiable gets cut or flagged, never published. Notes are public; one hallucinated
+> number kills the desk's credibility. Run that workflow on your backtest notes as its first
+> real test. Do NOT touch scorecard/ or scripts/. Commit as [S3], push, append a handoff.
 
 **Session 4 — Scorecard engine** *(owns: `scorecard/`, `scripts/score.py`)*
 
@@ -196,7 +203,9 @@ session obeys that line without re-deciding.
 > Commit as [S4], push, append a handoff.
 
 **Merge gate 2:** wire check — do Session 3's frontmatter fields carry everything score.py needs
-to link a call to its note? Fix mismatches now, solo. Delete nothing; flag dummies.
+to link a call to its note? Fix mismatches now, solo. Delete nothing; flag dummies. Then run
+/code-review (medium) over the phase's diff — a silent math bug in score.py poisons the public
+scorecard, and this is the cheapest moment to catch it.
 
 ---
 
@@ -229,7 +238,9 @@ to link a call to its note? Fix mismatches now, solo. Delete nothing; flag dummi
 > paired session is building the site against your output live), push, append a handoff.
 
 **Merge gate 3:** rebuild the site with real batch-1 content, delete Session 4's dummy scorecard
-entries, fix rendering issues, enable GitHub Pages from /docs, first deploy.
+entries, fix rendering issues. Before enabling GitHub Pages: run the security-review skill over
+the repo (nothing private in notes/config, no tokens, ToS ruling respected in every public
+artifact), then enable Pages from /docs — first deploy.
 
 ---
 
@@ -254,8 +265,9 @@ entries, fix rendering issues, enable GitHub Pages from /docs, first deploy.
 > and, when a universe name reports within 48h, sends a notification telling Nick which command
 > to run; (2) make /preview, /flash, /review one-command interactive runs that end by rebuilding
 > the site and pushing (earnings-day effort = open terminal, type /flash NVDA); (3) a /digest
-> weekly skill: what reported, how our calls scored, what's next week — output a site post +
-> a Substack-pasteable version; (4) write RUNBOOK.md covering the full cadence: T-1 preview,
+> weekly skill built with skill-creator: what reported, how our calls scored, what's next week —
+> output a site post + a Substack-pasteable version; keep the Session 3 fact-check publish gate
+> in all four skills; (4) write RUNBOOK.md covering the full cadence: T-1 preview,
 > T+0 flash, T+2 review, weekly digest, quarterly model refresh + score.py rerun. Test the
 > scheduled task fires. Verify whether a locally-scheduled claude session retains Daloopa auth —
 > document the answer in RUNBOOK.md; if yes, automate more; if no, the notify-then-manual design
@@ -287,8 +299,11 @@ one real cycle has run).
 > mirroring the Furton Research methodology paper's tone: universe selection, note cadence,
 > scorecard math, honest limitations. (4) Draft resume_bullets.md: 3 bullet variants + a
 > 90-second interview narrative connecting Furton Research and Furton Coverage. (5) Write the
-> Substack setup checklist (manual for Nick) and a digest cross-post procedure. Commit as [S10],
-> push, append a handoff.
+> Substack setup checklist (manual for Nick) and a digest cross-post procedure. If the Claude
+> Chrome extension is connected by now, use claude-in-chrome to drive the browser chores
+> directly (GitHub Pages settings, Porkbun DNS, Substack setup) instead of dictating
+> click-paths — confirm with Nick before submitting any form. Commit as [S10], push, append a
+> handoff.
 
 **Merge gate 5:** DNS verified with DoH (eduroam gotcha), HTTPS enforced, site linked both ways,
 PDF renders. Project is live.
