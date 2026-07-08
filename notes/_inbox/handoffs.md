@@ -83,3 +83,25 @@ make its diff noisy) — module is instead test- + ruff- + live-verified end to 
   stale from cache. Public API + settings keys it reads are documented in edgar_report.md §6.
 - **`basis` per name (confirm at gate):** NFLX, META, **DE are GAAP-basis** guides; the other 12
   are non-GAAP. score.py's refuse-to-cross-bases rule depends on this.
+
+## [S2 addendum] Specialist roster decision — 2026-07-08
+
+**Did:** Per Nick's call to specialize toward AI-infrastructure (and "don't add names we can't
+grade"), validated the mega-cap AI adds against live EDGAR and finalized the recommended roster in
+edgar_report.md **§7 (supersedes §4)**. Confirmed MSFT/GOOGL/AAPL give NO written guidance
+(call-only) and TSM is a foreign filer with no Item-2.02 8-K → all four EXCLUDED (documented so
+they're not re-added). Validated 4 new gradable names (AMD/AVGO/CRWD/AMZN, all EX-99.1, guidance in
+writing) with CIKs + FYE + reporting months for Session 1.
+
+**Final recommended 10 (my correlation call, delegated by Nick):**
+NVDA · AMD · AVGO · MU · CRM · PANW · CRWD · AMZN + **LLY · DE**. 8 AI-infra core + 2 deliberate
+decorrelators (LLY pharma, DE industrial) — a fully-correlated book makes the scorecard dismissible
+as one lucky sector run and both decorrelators are already validated & cleanly gradable. Not a pure
+AI book; the marginal correlation risk wasn't worth the 2 slots.
+
+**Next session (gate) must know:**
+- **Session 1 must add AMD/AVGO/CRWD/AMZN to universe.json** (CIKs+metadata in §7b — I can't edit
+  config/). AMZN replaces UNH as the 3rd Dow name → re-confirm NVDA/CRM/AMZN vs the live Dow 30.
+- **basis: AMZN and DE are GAAP-basis guides; the other 8 are non-GAAP** (score.py depends on it).
+- **Top alternates:** META (swap for CRWD if you want the mega-cap ads read), then NOW, NFLX, ISRG.
+- Calendar: Feb/May/Aug/Nov is the heavy window; peak weeks late-Feb & early-Mar are real work.

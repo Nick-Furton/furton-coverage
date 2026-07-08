@@ -110,6 +110,11 @@ flagged for its FY2025 guidance suspension but has **resumed** and in fact *rais
 
 ## 4. Recommended final 10
 
+> **⚠️ SUPERSEDED — see §7 (Specialist refinement, 2026-07-08).** §4 is the best 10 *within
+> Session 1's original 15 candidates*. After Nick chose a specialist AI-infrastructure direction,
+> §7 is the authoritative recommendation (it validates 4 new names and finalizes the roster).
+> §4 is kept for the record and its Dow/basis/cut reasoning still applies to the names it covers.
+
 Hard constraints: **cut V** (call-only ⇒ ungradeable; PLAN Merge Gate 1 says reject call-only unless
 deliberately accepted — I do not recommend accepting it). That also fixes the Dow-overlap cap: the
 remaining Dow members are **NVDA, CRM, UNH = exactly 3** (≤3 ✅). Five names must be cut from 15;
@@ -177,3 +182,89 @@ desk and memory is its own cycle), but this is exactly the kind of call the gate
   (+ `REVENUE_TAGS`/`EPS_DILUTED_TAGS`/… fallback lists), `latest_fact`, `metric_history`,
   `submissions`, `find_earnings_8k_filings`, `earnings_8k`, `press_release_text`, `html_to_text`.
 - **Tests:** `py -m pytest tests/` (21 golden-fixture tests, offline, ~0.1s) — the drift net.
+
+---
+
+## 7. Specialist refinement — final roster decision (2026-07-08)
+
+After §1–§6, Nick chose to steer the desk toward an **AI-infrastructure specialty** (the deep,
+narrow complement to Furton Research's broad Dow screen) with two firm rules: **(a) do not add any
+name we cannot grade** (no name whose guidance is call-only / absent), and **(b) Session 2 makes
+the correlation call.** This section validates the specialist candidates against live EDGAR the same
+way §3 did and finalizes the recommended 10. **It supersedes §4.**
+
+### 7a. Mega-cap AI names that are NOT gradable — excluded, do not re-litigate
+
+Validated against each company's latest earnings 8-K EX-99.1 press release:
+
+| Name | Written guidance in the release? | Ruling |
+|---|---|---|
+| **MSFT** | None. Segment guidance is given verbally on the call (CFO commentary). | **call-only — EXCLUDE** |
+| **GOOGL** | None. Alphabet gives essentially no forward guidance. | **no-guidance — EXCLUDE** |
+| **AAPL** | None. 1,547-word release, no outlook section (dropped formal guidance in 2020). | **call-only — EXCLUDE** |
+| **TSM** | No Item 2.02 8-K exists — foreign private issuer (20-F/6-K, IFRS, not us-gaap). | **out of spine scope — EXCLUDE** |
+
+These are the marquee names a naive "AI desk" would reach for, and they are exactly the ones our
+guidance-graded, EDGAR-only method cannot cover. Same disqualifier as Visa (§3). Documented here so
+no later session wastes time re-adding them.
+
+### 7b. New AI-infra candidates — validated gradable (propose to Session 1 for universe.json)
+
+All resolved, all file the press release as **EX-99.1**, all put quantitative guidance in writing:
+
+| Ticker | CIK | FYE | Reporting months | us-gaap concepts | History | Basis | Guidance evidence (latest release) |
+|---|---|---|---|---|---|---|---|
+| **AMD** | 0000002488 | Dec | Feb/May/Aug/Nov | 776 | 2009– (17y) | non-GAAP | "Q2 2026 … revenue **~$11.2B ±$300M**; non-GAAP gross margin **~56%**" |
+| **AVGO** | 0001730168 | Nov | Mar/Jun/Sep/Dec | 432 | 2017–* (9y) | non-GAAP | "Q3 FY26 revenue guidance **~$29.4B**; non-GAAP op-income ~67%; adj EBITDA ~68%" |
+| **CRWD** | 0001535527 | Jan | Mar/Jun/Sep/Dec | 438 | 2019– (7y) | non-GAAP | Full Q+FY table: ARR, total revenue $1,436–1,442M, **non-GAAP EPS $1.16–1.17** (Q2) / $4.88–4.96 (FY) |
+| **AMZN** | 0001018724 | Dec | Feb/Apr/Jul/Oct | 542 | 2008– (18y) | **GAAP** | "Q2 2026 Guidance: net sales **$194–199B**; operating income **$20–24B**" (GAAP basis) |
+
+\* AVGO CIK 1730168 is the post-Avago Broadcom Inc. entity (renamed 2018), so companyfacts history
+starts ~2017 — adequate but shorter; note in the model. CRWD (IPO 2019) is the shortest history in
+the set — fine for quarterly coverage.
+
+`NOW` (ServiceNow) also validated gradable (Q+FY non-GAAP guidance table) and is a strong software
+alternate; not in the final 10 below but a clean swap for CRWD or PANW if desired.
+
+### 7c. FINAL recommended roster (10) — my correlation decision
+
+**NVDA · AMD · AVGO · MU · CRM · PANW · CRWD · AMZN · LLY · DE**
+
+- **AI-infrastructure core (8):** NVDA, AMD, AVGO, MU (compute + memory) · CRM, PANW, CRWD (software
+  + security) · AMZN (hyperscaler — the only one that writes its guidance). Dense cross-reads:
+  NVDA→AMD→AVGO→MU is one supply chain; CRM/PANW/CRWD one software complex; AMZN & META-class capex
+  read through to NVDA/AVGO. Every print becomes commentary on 3–4 others.
+- **Two deliberate decorrelators:** **LLY** (pharma) and **DE** (industrials/ag). This is the
+  correlation call Nick delegated to me. **Reasoning:** a 10-name book all riding one AI-capex cycle
+  produces an accuracy scorecard that a skeptic dismisses as one lucky sector run, and a sector
+  drawdown dings every call at once. Two uncorrelated, cleanly-gradable names (LLY guides FY revenue
+  + non-GAAP EPS; DE guides a plain GAAP full-year net-income $ range — the least basis-ambiguous
+  call on the board) buy genuine scorecard credibility for a low brand cost, and both are already
+  validated (§3). I did **not** go to a pure 10-name AI book — the marginal correlation risk wasn't
+  worth the two names.
+
+**Dow overlap:** NVDA, CRM, AMZN = **3** (at the ≤3 cap; AMZN replaces UNH as the 3rd Dow name —
+re-confirm all three against the live Dow 30 at the gate). Everything else is non-Dow.
+
+**Dropped vs the §4 balanced 10:** NFLX, UNH, ISRG were cut for the AI-infra core; META was cut too
+(strong AI-capex read, but it kept the book tech-heavy without adding supply-chain cross-read the
+way AMD/AVGO/CRWD do — **META is the top alternate**, swap it in for CRWD if you'd rather have the
+mega-cap ads read than a second security name). NFLX and ISRG are the next alternates.
+
+**Honest calendar note:** Feb/May/Aug/Nov is heavy (NVDA, AMD, PANW, LLY, DE), softened by the
+Mar/Jun/Sep/Dec off-cycle cluster (AVGO, MU, CRWD) and AMZN's late-month Jan/Apr/Jul/Oct slot. Peak
+weeks (late-Feb, early-Mar) will be real work; the two decorrelators don't fix the calendar (LLY/DE
+sit in the busy window) — they're there for correlation, not staggering. Acceptable for a ~10-name
+desk; flagged so it's a known cost, not a surprise.
+
+### 7d. Merge-gate actions for this roster (supersedes §5's roster specifics)
+
+- [ ] **Session 1 (config/ owner):** add AMD, AVGO, CRWD, AMZN to `universe.json` with the CIKs and
+      FYE/reporting-months/basis from §7b (I can't edit config/ — this is the proposal). Set
+      `candidate:true` for the final 10; `candidate:false` (or remove) for the cut candidates.
+- [ ] Set `guidance_status: guidable` on all 10 (all validated). Record the §7a four as excluded
+      (call-only / out-of-scope) so they're not re-added.
+- [ ] `basis`: **AMZN and DE are GAAP-basis** guides; the other 8 are non-GAAP. score.py depends on this.
+- [ ] Re-confirm Dow 30 membership for NVDA / CRM / **AMZN** (AMZN is new to the Dow-count vs §4).
+- [ ] Run `refresh_calendar.py` on the frozen 10; sanity-check 2 names by hand with the edgar.py CLI.
+- [ ] The new names inherit the same spine guarantees (all EX-99.1, fail-loud finder verified live).
