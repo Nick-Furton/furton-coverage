@@ -1,9 +1,18 @@
 # Furton Coverage — Build Plan
 
-An automated sell-side-style earnings desk covering ~10 public companies, built almost entirely
-with Claude Code and the Daloopa plugin. Companion project to Furton Research (furton.ai).
+An automated sell-side-style earnings desk covering ~10 public companies, built entirely with
+Claude Code and **free, public SEC EDGAR data** — no paid data vendor, everything republishable.
+Companion project to Furton Research (furton.ai) and a sibling of Form D Radar (both ride the
+same SEC-EDGAR data spine).
 
 Working directory: `C:\Users\Nicholas Furton\Downloads\Miscellaneous Projects\Furton Coverage`
+
+> **Data-source note (2026-07-08):** This plan was reworked off Daloopa onto SEC EDGAR after
+> Daloopa's MCP turned out to be a paid, sales-quoted tier (the free account is Data Sheets +
+> 3 downloads only, no MCP). EDGAR is free, needs no auth, works headless, and — critically —
+> its data is public-domain, so every note and model we publish is fully redistributable with
+> no ToS entanglement. The registered Daloopa MCP server can stay as an *optional* accelerator
+> if a subscription ever appears, but **nothing in this plan requires it.**
 
 ---
 
@@ -18,15 +27,20 @@ everything (notes, Excel models, and a public accuracy scorecard) on a dashboard
 1. **Depth complement to Furton Research.** Furton Research screens 30 Dow names shallowly and
    systematically; Furton Coverage knows ~10 names cold. Resume line target:
    *"Built and operated an automated earnings-coverage desk (pre-earnings notes, same-day flashes,
-   guidance-accuracy tracking) across 10 companies for N consecutive quarters."*
+   guidance-accuracy tracking) across 10 companies for N consecutive quarters, entirely on free
+   SEC data."*
 2. **Public accountability.** Every call is timestamped and scored. A guidance tracker scores
    *management's* accuracy; a call log scores *ours*. Both are rendered on the site — this is the
    differentiator vs. every "AI writes stock reports" project.
-3. **Tangible artifacts.** Downloadable research notes (HTML/PDF) and Excel models per name —
-   proof of financial-modeling literacy for VC-club and recruiting conversations.
-4. **Heavy use of the new toolkit:** Daloopa MCP + its 20 analyst skills, scheduled agents,
-   Workflow fan-outs, docx/xlsx skills, dataviz, design skills.
+3. **Tangible artifacts.** Downloadable research notes (HTML/PDF) and Excel models per name,
+   built by us from SEC XBRL data — proof of financial-modeling literacy, and 100% ours to
+   publish, sell, or hand a recruiter.
+4. **Heavy use of the toolkit:** the EDGAR XBRL REST API (companyfacts/submissions), the xlsx &
+   docx skills for models and methodology, Workflow fan-outs for parallel diligence + adversarial
+   fact-checking, scheduled agents, dataviz, and the design skills.
 5. **(Nice-to-have) Revenue:** cross-post flashes/digests to a Substack once the cadence is proven.
+   Cleaner than the Daloopa path — the models are ours, so paywalling them raises no licensing
+   question.
 
 **Explicit non-goals:** live trading, price targets marketed as advice, covering more than ~12
 names, real-time intraday anything.
@@ -35,19 +49,19 @@ names, real-time intraday anything.
 
 ## 2. Prerequisites — Nick, one-time, before Phase 1
 
-These block everything and only you can do them:
+Short list now — EDGAR needs no account, no auth, no quota:
 
-- [ ] **Authorize the Daloopa connector.** Both `daloopa` and `daloopa-docs` MCP servers need
-      OAuth. Do this in claude.ai connector settings (or `/mcp` in an interactive `claude`
-      session). Until then every Daloopa skill is dead. Verify with `daloopa:setup` in any session.
-- [ ] **Check Daloopa plan limits.** Note the request/credit quota — the initiation phase
-      (10 names × research note + model) is the heaviest single burst of the whole project.
-      If quota is tight, initiations spread across weeks instead of one weekend.
-- [ ] **Create the GitHub repo:** `gh repo create Nick-Furton/furton-coverage --public` (gh is
-      already authed). Decide now: site will serve from `/docs` on `main`, same as furton.ai.
+- [x] **GitHub repo** — created & pushed: github.com/Nick-Furton/furton-coverage (site serves
+      from `/docs` on `main`, same as furton.ai).
+- [ ] **Confirm the SEC EDGAR User-Agent identity.** Every EDGAR request must send a
+      `User-Agent` naming you + email (e.g. `Furton Coverage nicholas@furton.com`). This is the
+      same identity Form D Radar uses — public etiquette, not a secret. It goes in
+      config/settings.json in Session 1; you just need to confirm the string.
 - [ ] **Universe overlap policy.** Recommendation: at most 3 names overlapping the Furton Research
       Dow roster (overlap enables cross-project comparisons; too much overlap looks like one
       project wearing two hats). Final universe is approved by you at the Phase 1 merge gate.
+- [ ] *(Optional, not blocking)* If a Daloopa subscription ever materializes, its MCP can speed
+      up model-building — but do not wait on it and do not pay for it for this project.
 
 ---
 
@@ -58,16 +72,23 @@ Furton Coverage/
 ├── CLAUDE.md                 # conventions every session must follow (exists from day 0)
 ├── PLAN.md                   # this file
 ├── config/
-│   ├── universe.json         # tickers: sector, fiscal-year end, earnings dates, daloopa_ok flag
+│   ├── settings.json         # SEC User-Agent, rate limit (≤10 req/s), paths
+│   ├── universe.json         # tickers: cik, sector, fiscal-year end, key-KPI concept tags
 │   └── calendar.json         # next earnings event per ticker (auto-refreshed)
+├── data/
+│   └── raw/                  # cached EDGAR JSON (companyfacts, submissions) — gitignored
 ├── notes/<TICKER>/           # 2026-07-21_preview.md, 2026-07-22_flash.md, 2026-07-24_review.md
-├── models/<TICKER>/          # <TICKER>_model_<date>.xlsx  (from daloopa:build-model / initiate)
+├── models/<TICKER>/          # <TICKER>_model_<date>.xlsx  (built by scripts/build_model.py)
 ├── scorecard/
 │   ├── calls/<TICKER>.jsonl   # our timestamped calls, ONE FILE PER TICKER — sharded so parallel
 │   │                          #   sessions (two prints same day = two /flash runs) never collide
 │   ├── guidance/<TICKER>.jsonl# management guidance vs. actuals, same per-ticker sharding
 │   └── summary.json           # generated by score.py only — never hand-edit
 ├── scripts/                  # Python (run with `py`; set PYTHONUTF8=1 — console is cp1252)
+│   ├── edgar.py              # THE DATA SPINE: CIK lookup, companyfacts/XBRL fetch+parse,
+│   │                         #   submissions/filing retrieval, 8-K earnings press-release finder.
+│   │                         #   Every other script imports this; it owns all SEC etiquette.
+│   ├── build_model.py        # companyfacts XBRL → <TICKER>_model.xlsx via the xlsx skill
 │   ├── build_site.py         # notes/ + scorecard/ + models/ → docs/ static site
 │   ├── refresh_calendar.py   # upcoming earnings dates → config/calendar.json
 │   └── score.py              # recompute accuracy stats → scorecard/summary.json
@@ -75,21 +96,36 @@ Furton Coverage/
 └── docs/                     # generated static site — GitHub Pages serves this; never hand-edit
 ```
 
+**The EDGAR data spine (`scripts/edgar.py`) — what replaces Daloopa:**
+- **Fundamentals** ← XBRL `companyfacts` API (`data.sec.gov/api/xbrl/companyfacts/CIK{10-digit}.json`):
+  every financial concept the company has ever tagged (revenue, EPS, margins, and segment/KPI
+  data *where the company tags it*), full history. `companyconcept` for a single concept.
+- **Filings & press releases** ← `submissions` API (`data.sec.gov/submissions/CIK{10-digit}.json`)
+  for the filing index, plus EDGAR full-text search (efts.sec.gov) — 10-K/10-Q for the narrative,
+  **8-K with Exhibit 99.1 for the quarterly earnings press release** (this is where the printed
+  numbers AND management guidance live).
+- **CIK map** ← `sec.gov/files/company_tickers.json` (ticker → CIK), resolved once in Session 1.
+
 **Design rules (also in CLAUDE.md):**
-- All Daloopa-derived numbers flow through skills into *files*; the site generator only reads
+- **SEC etiquette is non-negotiable:** declared `User-Agent` with email on every request,
+  ≤10 req/s (SEC's cap), backoff, cache all raw JSON in `data/raw/` so nothing is fetched twice.
+  `edgar.py` is the *only* module that touches the network; everything else reads its cache.
+- All EDGAR-derived numbers flow through `edgar.py` into *files*; the site generator only reads
   files. No network calls at site-build time → the site always builds, even offline.
 - Every note carries frontmatter: `ticker, type (preview|flash|review|initiation), event_date,
   published_at`. The generator and scorecard both key off it.
-- Preview server port: **8802** (8801 = website v2, 8899 = Schwab Analysis, 8765 = Furton engine).
-- Content standard: every preview note makes falsifiable calls. **Benchmark decision (made
-  2026-07-07, not deferred): calls are graded against management guidance** — verifiable, free,
-  and republishable. Web-sourced consensus may appear as color only, always with the source
-  cited, never as the grading benchmark.
+- Preview server port: **8802** (8801 = website v2, 8899 = Schwab Analysis, 8765 = Furton engine,
+  8803 = Form D Radar).
+- **Benchmark decision (kept from the original plan): calls are graded against management
+  guidance** — and guidance is itself an EDGAR artifact (the prior quarter's 8-K press release),
+  so the benchmark is free, verifiable, and republishable end to end. Web-sourced consensus may
+  appear as color only, always cited, never as the grading benchmark.
 - **Grading is deterministic, not self-graded.** score.py compares numeric calls to actuals in
   code; Claude never grades its own quantitative calls. Only explicitly-qualitative calls get a
   judgment pass, and that prompt must quote both the original call and the evidence verbatim.
-- **Flash (T+0) sources = company press release / 8-K + web.** Daloopa digitizes filings with
-  some lag — it powers the T+2 review and the models, never blocks the flash.
+- **Flash (T+0) source = the earnings 8-K (Exhibit 99.1) pulled straight from EDGAR**, plus web
+  for color. EDGAR posts 8-Ks within minutes of release, so the flash is *faster* on EDGAR than
+  it would have been waiting on a vendor to digitize.
 - Disclaimer on every page: educational research, not investment advice.
 
 ---
@@ -124,88 +160,103 @@ fine, but pick one deliberately and note it in the README.
 
 ---
 
-### ☐ Phase 1 — Foundation ∥ Data validation
+### ☐ Phase 1 — Foundation ∥ EDGAR data spine
+
+**Coordination note:** Session 1 builds the repo skeleton, config schemas, and calendar; Session 2
+builds and validates `edgar.py`, the data spine everything downstream depends on. They meet at
+merge gate 1, where the candidate universe is scored on how richly each name tags its XBRL data
+(this varies a lot by company) and the final 10 is frozen with CIKs resolved. Session 1 must NOT
+write network/EDGAR code; Session 2 must NOT edit config/ (it proposes via _inbox).
 
 **Session 1 — Scaffold & calendar** *(owns: `config/`, `scripts/refresh_calendar.py`, repo scaffold, `.gitignore`)*
 
 > Read CLAUDE.md and PLAN.md. You are Session 1 (scaffold). Create the full directory skeleton
-> from PLAN.md §3 with .gitkeep files. Write the `universe.json` and `calendar.json` schemas and a
-> candidate list of ~15 tickers as universe.json entries flagged `candidate: true` — optimize for
-> KPI-rich names, sector spread, and staggered earnings dates (list each candidate's typical
-> reporting month). Then write and test `scripts/refresh_calendar.py`: given universe.json, fetch
-> upcoming earnings dates (web search is fine as the source) and write calendar.json. Windows
-> notes: run Python via `py`, set PYTHONUTF8=1. Do NOT touch notes/, scorecard/, site_src/, or
-> anything Daloopa. Commit as [S1], push, and append a handoff to notes/_inbox/handoffs.md.
+> from PLAN.md §3 with .gitkeep files; .gitignore data/raw/. Write config/settings.json (SEC
+> User-Agent `Furton Coverage nicholas@furton.com`, ≤10 req/s, backoff, paths). Write the
+> universe.json and calendar.json schemas and a candidate list of ~15 tickers flagged
+> `candidate: true` — optimize for KPI-rich names, sector spread, and staggered earnings dates
+> (list each candidate's typical reporting month). For EACH candidate, resolve its CIK from
+> sec.gov/files/company_tickers.json and store it in the entry (every downstream EDGAR call needs
+> the CIK). Then write and test scripts/refresh_calendar.py: given universe.json, fetch upcoming
+> earnings dates (web search is fine as the source) and write calendar.json. Windows notes: run
+> Python via `py`, set PYTHONUTF8=1. Do NOT write edgar.py or any SEC-API code (your partner owns
+> the data spine), and do NOT touch notes/, scorecard/, or site_src/. Commit as [S1], push,
+> append a handoff to notes/_inbox/handoffs.md.
 
-**Session 2 — Daloopa validation** *(owns: `notes/_inbox/daloopa_report.md`)*
+**Session 2 — EDGAR data spine & universe validation** *(owns: `scripts/edgar.py`, `notes/_inbox/edgar_report.md`)*
 
-> Read CLAUDE.md and PLAN.md. You are Session 2 (Daloopa validation). Run daloopa:setup and
-> confirm the connection. Then, for each candidate ticker you find in config/universe.json (if
-> Session 1 hasn't committed it yet, use: NVDA MSFT AMZN GOOGL META COST JPM LLY CAT NFLX AMD UNH
-> DE PANW CRM), assess Daloopa data depth — run daloopa:tearsheet on 3–4 representative names and
-> spot-check the rest for KPI coverage (segment detail, guidance capture, history length). Write
-> notes/_inbox/daloopa_report.md: a table of candidates scored on data depth, plus your
-> recommended final 10 with one line of rationale each, respecting the ≤3-Dow-overlap policy in
-> PLAN.md §2. Note any rate/credit limits you hit. CRITICAL second deliverable: read Daloopa's
-> terms of service and document in the report what we may REPUBLISH — our site hosts public
-> research notes and downloadable Excel models built from their data, and the §8 revenue path
-> depends on redistribution being allowed. Quote the relevant ToS language; if models can't be
-> republished, say so plainly — the site ships screenshots + our own derived tables instead.
-> Do NOT edit config/ — the merge gate finalizes the universe. Commit as [S2], push, append a
-> handoff.
+> Read CLAUDE.md and PLAN.md. You are Session 2 (EDGAR data spine). Build and test scripts/edgar.py
+> — the module every other script imports. It must: (a) resolve ticker→CIK; (b) fetch & cache the
+> XBRL companyfacts JSON for a CIK and extract named concepts (revenue, EPS, and a company's
+> key KPIs) with history; (c) fetch the submissions index and locate a company's most recent
+> quarterly earnings 8-K and its Exhibit 99.1 press-release document; (d) enforce ALL SEC
+> etiquette (User-Agent from settings.json, ≤10 req/s, backoff, cache in data/raw/). Then VALIDATE
+> the candidate universe: for each candidate ticker in config/universe.json (if Session 1 hasn't
+> committed it, use NVDA MSFT AMZN GOOGL META COST JPM LLY CAT NFLX AMD UNH DE PANW CRM), score
+> EDGAR data depth in notes/_inbox/edgar_report.md — a table rating each on XBRL richness (are
+> segments/KPIs actually tagged, or only headline financials?), whether their earnings 8-K
+> press releases are cleanly machine-parseable for reported numbers AND forward guidance, and
+> history length. Flag names whose guidance is hard to extract from press-release text — that's
+> the fragile part of this whole architecture. Recommend the final 10 with one line each,
+> respecting the ≤3-Dow-overlap policy in §2. Do NOT edit config/ — the merge gate finalizes the
+> universe. Commit as [S2], push, append a handoff.
 
-**Merge gate 1:** Nick picks the final 10 → set `candidate: false→true/remove` in universe.json,
-run refresh_calendar.py, commit. *Universe is now frozen; changes require a dated note.*
-Also rule on the ToS finding: write one line in CLAUDE.md stating exactly what Daloopa content
-may appear in public files (full models / derived tables only / screenshots only) — every later
-session obeys that line without re-deciding. Finally, run the fewer-permission-prompts skill —
-eight more sessions run in this repo and every permission nag is paid eight times.
+**Merge gate 1:** Nick picks the final 10 → set `candidate` flags in universe.json, confirm each
+has a resolved CIK, run refresh_calendar.py, commit. *Universe is now frozen; changes require a
+dated note.* Sanity-check edgar.py against 2 names by hand (does companyfacts return what you
+expect? does it find the right 8-K?). Run the fewer-permission-prompts skill — eight more
+sessions run in this repo and every permission nag is paid eight times.
 
 ---
 
 ### ☐ Phase 2 — Deliverable pipeline ∥ Scorecard engine
 
-**Session 3 — Note templates & desk workflow** *(owns: `notes/` templates + one test ticker's notes, `.claude/skills/` if used)*
+**Session 3 — Note templates & desk workflow** *(owns: `notes/` templates + one test ticker's notes, `.claude/skills/`, `scripts/build_model.py`)*
 
-> Read CLAUDE.md and PLAN.md. You are Session 3 (deliverables). Design the three note templates —
-> preview (T-1: setup, guidance table, our falsifiable calls graded against guidance per the §3
-> benchmark decision, what-matters), flash (T+0: headline vs. our calls, guidance changes,
-> first-read verdict — sourced from the press release/8-K + web, NEVER blocked on Daloopa),
-> review (T+2: full daloopa:earnings-review synthesis, model deltas, thesis update) — with the
-> frontmatter schema from PLAN.md §3. Numeric calls must be machine-gradable: each carries
-> metric, direction/value, and benchmark in structured frontmatter so score.py grades them in
-> code, not by asking Claude. Then prove the pipeline end-to-end as a backtest: pick one universe ticker
-> whose last earnings already happened; write its preview using ONLY pre-print information
-> (daloopa:earnings-prep + web search restricted to pre-print dates), then its flash and review
-> from the actual results. This validates the templates against reality. Package the repeatable
-> procedure as three project slash commands (skills): /preview <TICKER>, /flash <TICKER>,
-> /review <TICKER> — build them with the skill-creator skill so they're properly structured and
-> testable. Bake a PUBLISH GATE into each skill: before a note is saved as final, the skill
-> instructs running an adversarial fact-check workflow — parallel agents re-verify every
-> numeric claim in the note against its cited source and try to refute the qualitative call;
-> anything unverifiable gets cut or flagged, never published. Notes are public; one hallucinated
-> number kills the desk's credibility. Run that workflow on your backtest notes as its first
-> real test. Do NOT touch scorecard/ or scripts/. Commit as [S3], push, append a handoff.
+> Read CLAUDE.md and PLAN.md. You are Session 3 (deliverables). Design the three note templates,
+> all sourced from edgar.py:
+> - **preview (T-1):** setup, a guidance table built from the PRIOR quarter's 8-K press release,
+>   our falsifiable calls graded against that guidance per the §3 benchmark decision, what-matters.
+> - **flash (T+0):** headline actuals pulled from the just-filed earnings 8-K (Exhibit 99.1) vs.
+>   our calls, guidance changes, first-read verdict.
+> - **review (T+2):** full synthesis from the 8-K + the 10-Q once filed (companyfacts XBRL),
+>   model deltas, thesis update.
+> Numeric calls must be machine-gradable: each carries metric, direction/value, and benchmark in
+> structured frontmatter so score.py grades them in code, not by asking Claude. Also write
+> scripts/build_model.py: pull a ticker's companyfacts via edgar.py and lay out a multi-tab Excel
+> model (income statement / KPIs / our estimates) using the xlsx skill — this is our own model,
+> fully ours to publish. Then prove the pipeline end-to-end as a backtest: pick one universe
+> ticker whose last earnings already happened; write its preview using ONLY pre-print info
+> (prior 8-K guidance + last 10-Q XBRL + web restricted to pre-print dates), then its flash and
+> review from the actual earnings 8-K. Package the repeatable procedure as project slash commands
+> built with the skill-creator skill: /preview <TICKER>, /flash <TICKER>, /review <TICKER>. Bake
+> a PUBLISH GATE into each: before a note is saved final, run an adversarial fact-check workflow —
+> parallel agents re-verify every numeric claim against the cited EDGAR document and try to
+> refute the qualitative call; anything unverifiable is cut or flagged, never published. Notes
+> are public; one hallucinated number kills the desk's credibility. Run that workflow on your
+> backtest notes as its first real test. Do NOT touch scorecard/ or score.py. Commit as [S3],
+> push, append a handoff.
 
 **Session 4 — Scorecard engine** *(owns: `scorecard/`, `scripts/score.py`)*
 
-> Read CLAUDE.md and PLAN.md. You are Session 4 (scorecard). Define the schemas for the
-> PER-TICKER sharded stores scorecard/calls/<TICKER>.jsonl and scorecard/guidance/<TICKER>.jsonl
-> per PLAN.md §3 (sharding is what lets parallel sessions on different tickers coexist) — every
-> entry timestamped, with a source_note field pointing at the note file that made the call.
-> Write scripts/score.py to read ALL shards and compute per-ticker and aggregate stats: our hit
-> rate by call type, management guidance accuracy (beat/met/missed own guidance), calibration
-> over time; output scorecard/summary.json for the site. Grading of numeric calls is
-> DETERMINISTIC — score.py compares call vs. actual in code; no LLM in the grading path.
-> Seed with realistic dummy data, test, then leave the dummies clearly flagged `"dummy": true`
-> so the site pair can build against real structure. Fail loudly on malformed entries — same
-> fail-loud philosophy as Furton Research's vote parser. Do NOT touch notes/ templates.
-> Commit as [S4], push, append a handoff.
+> Read CLAUDE.md and PLAN.md. You are Session 4 (scorecard). Define the schemas for the PER-TICKER
+> sharded stores scorecard/calls/<TICKER>.jsonl and scorecard/guidance/<TICKER>.jsonl per §3
+> (sharding is what lets parallel sessions on different tickers coexist) — every entry timestamped,
+> with a source_note field pointing at the note that made the call, and (for guidance) a
+> source_filing field pointing at the EDGAR 8-K URL the guidance came from. Write scripts/score.py
+> to read ALL shards and compute per-ticker and aggregate stats: our hit rate by call type,
+> management guidance accuracy (beat/met/missed own guidance), calibration over time; output
+> scorecard/summary.json. Grading of numeric calls is DETERMINISTIC — score.py compares call vs.
+> actual in code; no LLM in the grading path. Seed with realistic dummy data flagged
+> `"dummy": true` so the site pair can build against real structure. Fail loudly on malformed
+> entries — same fail-loud philosophy as Furton Research's vote parser. Do NOT touch notes/
+> templates. Commit as [S4], push, append a handoff.
 
 **Merge gate 2:** wire check — do Session 3's frontmatter fields carry everything score.py needs
-to link a call to its note? Fix mismatches now, solo. Delete nothing; flag dummies. Then run
-/code-review (medium) over the phase's diff — a silent math bug in score.py poisons the public
-scorecard, and this is the cheapest moment to catch it.
+to link a call to its note, and does the guidance schema capture the source 8-K URL? Fix
+mismatches now, solo. Delete nothing; flag dummies. Run /code-review (medium) over the phase's
+diff — a silent math bug in score.py poisons the public scorecard, and a parse bug in edgar.py
+poisons every number; this is the cheapest moment to catch both.
 
 ---
 
@@ -213,34 +264,34 @@ scorecard, and this is the cheapest moment to catch it.
 
 **Session 5 — Site generator & design** *(owns: `site_src/`, `scripts/build_site.py`, `docs/`, `.claude/launch.json`)*
 
-> Read CLAUDE.md and PLAN.md. You are Session 5 (website). Build scripts/build_site.py +
-> site_src/ templates: a static site generated from notes/, scorecard/summary.json, and models/.
-> Pages: home (coverage universe grid + next-earnings countdown + headline scorecard stats),
-> per-ticker page (note timeline, call record, model download), research library (all notes,
+> Read CLAUDE.md and PLAN.md. You are Session 5 (website). Build scripts/build_site.py + site_src/
+> templates: a static site generated from notes/, scorecard/summary.json, and models/. Pages:
+> home (coverage universe grid + next-earnings countdown + headline scorecard stats), per-ticker
+> page (note timeline, call record, downloadable Excel model), research library (all notes,
 > filterable), scorecard page (charts — use the dataviz skill), about/methodology stub. Visual
-> language: match furton.ai v2's dashboard style (reference: ..\..\Furton Research\
-> furton_website\) but it must read as a sibling brand, not a clone — different accent color.
-> Output to docs/ for GitHub Pages. Add .claude/launch.json serving docs/ on port 8802 and verify
-> with the preview tools, including dark mode and mobile widths. Build against Session 4's dummy
-> scorecard data and Session 3's backtest notes. Do NOT run any Daloopa skills (the paired
-> session is consuming the quota). Commit as [S5], push, append a handoff.
+> language: match furton.ai v2's dashboard style (reference ..\..\Furton Research\furton_website\)
+> but read as a sibling brand, not a clone — different accent color. Output to docs/ for GitHub
+> Pages. Add .claude/launch.json serving docs/ on port 8802; verify with the preview tools incl.
+> dark mode and mobile widths. Build against Session 4's dummy scorecard data and Session 3's
+> backtest notes. You own presentation only — do not run edgar.py, build_model.py, or touch
+> notes content (the paired session is generating it live). Commit as [S5], push, append a handoff.
 
 **Session 6 — Initiate coverage, names 1–5** *(owns: `notes/<first-5-tickers>/`, `models/<first-5>/`, `scorecard/calls/<first-5>.jsonl`)*
 
-> Read CLAUDE.md and PLAN.md. You are Session 6 (initiations, batch 1). For the first 5 tickers
-> in config/universe.json (alphabetical): run daloopa:initiate to produce the research note and
-> Excel model; save per PLAN.md §3 conventions with type: initiation frontmatter. Respect the
-> merge-gate-1 ToS finding on what Daloopa data may appear in public files. From each note,
-> extract our baseline view into that ticker's scorecard/calls/<TICKER>.jsonl (thesis-level
-> calls, flagged call_type: "initiation"). Keep a running cost/quota tally in notes/_inbox/daloopa_usage.md and
-> STOP if you hit plan limits — partial coverage is fine, silent failure is not. Do NOT touch
-> site_src/, scripts/, or the other 5 tickers. Commit as [S6] after EACH completed ticker (the
-> paired session is building the site against your output live), push, append a handoff.
+> Read CLAUDE.md and PLAN.md. You are Session 6 (initiations, batch 1). For the first 5 tickers in
+> config/universe.json (alphabetical): write an initiation note from EDGAR (latest 10-K narrative
+> + companyfacts XBRL history via edgar.py) and build the Excel model with build_model.py; save
+> per §3 conventions with type: initiation frontmatter. Everything you publish is EDGAR-sourced
+> and fully ours — no republication constraint. Run the Session 3 fact-check publish gate on each
+> note. From each note, extract our baseline view into that ticker's scorecard/calls/<TICKER>.jsonl
+> (thesis-level calls, flagged call_type: "initiation"). Do NOT touch site_src/, scripts/, or the
+> other 5 tickers. Commit as [S6] after EACH completed ticker (the paired session is building the
+> site against your output live), push, append a handoff.
 
 **Merge gate 3:** rebuild the site with real batch-1 content, delete Session 4's dummy scorecard
 entries, fix rendering issues. Before enabling GitHub Pages: run the security-review skill over
-the repo (nothing private in notes/config, no tokens, ToS ruling respected in every public
-artifact), then enable Pages from /docs — first deploy.
+the repo (nothing private in notes/config, no tokens, User-Agent email is intentional/public),
+then enable Pages from /docs — first deploy.
 
 ---
 
@@ -249,29 +300,32 @@ artifact), then enable Pages from /docs — first deploy.
 **Session 7 — Initiations 6–10 & guidance history** *(owns: `notes/<last-5>/`, `models/<last-5>/`, `scorecard/calls/<last-5>.jsonl`, `scorecard/guidance/`)*
 
 > Read CLAUDE.md and PLAN.md. You are Session 7 (initiations batch 2 + backfill). First: initiate
-> the remaining 5 universe tickers exactly as Session 6 did (read its handoff and
-> daloopa_usage.md; keep the tally going). Second: backfill the per-ticker files in
-> scorecard/guidance/ — for ALL 10 names, use daloopa:guidance-tracker to capture the last 4
-> quarters of management guidance vs. actuals, so the scorecard shows real accuracy stats from
-> day one instead of an empty chart.
-> Commit as [S7] per ticker, push, append a handoff.
+> the remaining 5 universe tickers exactly as Session 6 did (read its handoff). Second: backfill
+> the per-ticker files in scorecard/guidance/ — for ALL 10 names, pull the last 4 quarters of
+> earnings 8-K press releases via edgar.py and extract management guidance vs. actuals (guidance
+> as given in quarter N's release, actuals as reported in quarter N+1's release), so the scorecard
+> shows real accuracy stats from day one instead of an empty chart. This press-release guidance
+> extraction is the hardest data task in the project — verify each extracted guidance figure
+> against the source document with an adversarial check, store the source_filing URL, and where a
+> release genuinely gives no quantitative guidance, record that honestly rather than inventing a
+> number. Commit as [S7] per ticker, push, append a handoff.
 
 **Session 8 — Automation & runbook** *(owns: `scripts/refresh_calendar.py` (extend), `.claude/skills/`, `RUNBOOK.md`, scheduled tasks)*
 
-> Read CLAUDE.md and PLAN.md. You are Session 8 (automation). Build the operating loop around one
-> hard constraint: Daloopa is an interactively-authenticated MCP connector and may be ABSENT in
-> headless/scheduled cloud runs — so scheduled automation must never assume Daloopa access.
-> Design accordingly: (1) a scheduled task (schedule skill) that runs refresh_calendar.py daily
-> and, when a universe name reports within 48h, sends a notification telling Nick which command
-> to run; (2) make /preview, /flash, /review one-command interactive runs that end by rebuilding
-> the site and pushing (earnings-day effort = open terminal, type /flash NVDA); (3) a /digest
-> weekly skill built with skill-creator: what reported, how our calls scored, what's next week —
-> output a site post + a Substack-pasteable version; keep the Session 3 fact-check publish gate
-> in all four skills; (4) write RUNBOOK.md covering the full cadence: T-1 preview,
-> T+0 flash, T+2 review, weekly digest, quarterly model refresh + score.py rerun. Test the
-> scheduled task fires. Verify whether a locally-scheduled claude session retains Daloopa auth —
-> document the answer in RUNBOOK.md; if yes, automate more; if no, the notify-then-manual design
-> stands. Commit as [S8], push, append a handoff.
+> Read CLAUDE.md and PLAN.md. You are Session 8 (automation). Good news vs. the old plan: EDGAR is
+> a plain public HTTP API with no auth, so unlike a vendor connector it works fully headless —
+> lean into that. Build: (1) a scheduled task (schedule skill) running refresh_calendar.py daily
+> that, when a universe name reports within 48h, notifies Nick which command to run; (2) make
+> /preview, /flash, /review one-command interactive runs that end by rebuilding the site and
+> pushing (earnings-day effort = open terminal, type /flash NVDA); (3) a /digest weekly skill
+> (skill-creator): what reported, how our calls scored, what's next week — output a site post + a
+> Substack-pasteable version; keep the Session 3 fact-check publish gate in all four skills;
+> (4) write RUNBOOK.md covering the full cadence: T-1 preview, T+0 flash, T+2 review, weekly
+> digest, quarterly model refresh (build_model.py re-run on fresh XBRL) + score.py rerun.
+> Explore how far headless automation can go: since EDGAR needs no auth, a scheduled job CAN
+> fetch the 8-K the moment it's filed and even draft the flash for Nick to review — prototype
+> this and document in RUNBOOK.md whether the drafts are good enough to trust, or whether
+> earnings-day stays interactive. Test the scheduled task fires. Commit as [S8], push, handoff.
 
 **Merge gate 4:** full dress rehearsal — pick the next real earnings event on the calendar and
 walk RUNBOOK.md end-to-end for it (even if that means waiting a few days; the gate closes when
@@ -291,21 +345,22 @@ one real cycle has run).
 
 **Session 10 — Publishing & positioning** *(owns: `docs/CNAME`, `README.md`, methodology one-pager, `notes/_inbox/resume_bullets.md`)*
 
-> Read CLAUDE.md and PLAN.md. You are Session 10 (publishing). (1) Set up
-> coverage.furton.ai: CNAME file in docs/, then walk Nick through the Porkbun DNS record —
-> remember the hidden parking-ALIAS gotcha from the furton.ai setup. (2) Add a cross-link on
-> furton.ai to the new site (edit lives in ..\..\Furton Research\furton_website\). (3) Write a
-> 2-page methodology note (docx via the docx skill → PDF via Word COM, no LibreOffice here)
-> mirroring the Furton Research methodology paper's tone: universe selection, note cadence,
-> scorecard math, honest limitations. (4) Draft resume_bullets.md: 3 bullet variants + a
-> 90-second interview narrative connecting Furton Research and Furton Coverage. (5) Write the
-> Substack setup checklist (manual for Nick) and a digest cross-post procedure. If the Claude
-> Chrome extension is connected by now, use claude-in-chrome to drive the browser chores
-> directly (GitHub Pages settings, Porkbun DNS, Substack setup) instead of dictating
-> click-paths — confirm with Nick before submitting any form. Commit as [S10], push, append a
-> handoff.
+> Read CLAUDE.md and PLAN.md. You are Session 10 (publishing). (1) Set up coverage.furton.ai:
+> CNAME file in docs/, then walk Nick through the Porkbun DNS record — remember the hidden
+> parking-ALIAS gotcha from the furton.ai setup. (2) Cross-link furton.ai ↔ this site ↔ Form D
+> Radar (all three ride the same SEC-EDGAR spine — make that the narrative; the furton.ai edit
+> lives in ..\..\Furton Research\furton_website\). (3) Write a 2-page methodology note (docx skill
+> → PDF via Word COM, no LibreOffice here) mirroring the Furton Research methodology paper's tone:
+> universe selection, the EDGAR data spine, note cadence, scorecard math, and honest limitations
+> (guidance-from-press-release extraction, XBRL tagging variance, no transcripts on EDGAR).
+> (4) Draft resume_bullets.md: 3 bullet variants + a 90-second interview narrative connecting all
+> three Furton projects (screen → deep coverage → market-wide flow), emphasizing "entirely on
+> free public data." (5) Write the Substack setup checklist (manual for Nick) and a digest
+> cross-post procedure. If the Claude Chrome extension is connected by now, use claude-in-chrome
+> to drive the browser chores (GitHub Pages settings, Porkbun DNS, Substack) directly — confirm
+> with Nick before submitting any form. Commit as [S10], push, append a handoff.
 
-**Merge gate 5:** DNS verified with DoH (eduroam gotcha), HTTPS enforced, site linked both ways,
+**Merge gate 5:** DNS verified with DoH (eduroam gotcha), HTTPS enforced, all three sites linked,
 PDF renders. Project is live.
 
 ---
@@ -319,10 +374,11 @@ PDF renders. Project is live.
 | Print day | Flash within hours; preview calls graded | `/flash <TICKER>` |
 | T+2 after call | Full review, model updated, scorecard updated | `/review <TICKER>` |
 | Friday | Weekly digest → site + Substack | `/digest` |
-| Quarterly | Model refresh all 10, score.py recalibration, methodology addendum | manual session |
+| Quarterly | build_model.py refresh all 10, score.py recalibration, methodology addendum | manual session |
 
 Sustained load estimate: earnings cluster weeks ≈ 3–5 events → roughly 1–2 hrs of terminal
-babysitting per week during season, near-zero off-season.
+babysitting per week during season, near-zero off-season. (If Session 8's headless flash-draft
+prototype pans out, even less.)
 
 **Degraded mode (will happen — college schedule beats desk schedule):** a missed T+0 becomes a
 "delayed flash" published T+1 with its honest `published_at` timestamp — never backdated. A
@@ -332,30 +388,32 @@ believable.
 
 ## 7. Risks & Honest Caveats
 
-- **Daloopa auth in headless runs** is the load-bearing risk for "automation"; the plan assumes
-  notify-then-manual until Session 8 proves otherwise.
-- **Daloopa quota** could throttle Phases 3–4; the per-ticker commit rule means partial progress
-  is always preserved and visible.
-- **Daloopa ToS / republication** is the biggest unexamined risk: the public artifact plan
-  (downloadable models, data-rich notes) and the entire §8 revenue path assume redistribution
-  is allowed. Session 2 checks; merge gate 1 rules; nothing data-rich publishes before that.
-- **Single-vendor dependency.** If Daloopa's quota, ToS, or auth kills the happy path, the desk
-  survives on Plan B: EDGAR filings (10-Q/8-K/press releases — free, republishable) + company
-  IR pages, with hand-rolled models instead of daloopa:build-model. Slower, still real. Every
-  phase's deliverables must remain producible on Plan B — Daloopa is the accelerator, not the
-  foundation.
-- **Benchmark = management guidance** (decided in §3; consensus is color only, never the
-  grading standard). Note it in the methodology.
+- **Guidance extraction from press-release text is the fragile part** now that it's not a vendor's
+  job. Management guidance lives in 8-K Exhibit 99.1 prose, phrased differently by every company
+  and quarter. Mitigations: adversarial verification of every extracted figure against the source
+  (Session 7), storing the source_filing URL so any number is auditable, and recording "no
+  quantitative guidance given" honestly instead of inventing one. This is the top thing to watch.
+- **XBRL tagging quality varies by company.** Headline financials are reliably tagged; segment
+  and KPI detail is not always. Session 2's universe scoring exists to weed out poorly-tagged
+  names before they're frozen into the roster.
+- **No transcripts on EDGAR.** Earnings-call color (management tone, Q&A) isn't in filings, so
+  qualitative calls lean thinner than a Bloomberg-fed desk. Mitigate with cited web sources;
+  don't fake transcript access.
+- **Consensus isn't on EDGAR either** — hence the §3 decision to grade against management
+  guidance (which *is*), with web-sourced consensus as cited color only.
 - **Credibility cuts both ways:** a public scorecard that shows misses is the feature, not a bug.
   Never quietly edit a published call — corrections get dated addenda, same as the paper.
 - **Two sessions, one repo** works only with the §4 discipline; if conflicts happen anyway,
   fall back to running pairs in separate git worktrees.
+- **Upside vs. the old plan:** no vendor auth, no quota, no ToS, no cost, fully headless-capable,
+  and everything published is public-domain-sourced and ours. The EDGAR spine is also shared DNA
+  with Form D Radar — a cleaner three-project story.
 
 ## 8. Revenue Path (optional, after one full quarter)
 
 1. Quarter 1: publish everything free on the site; digests cross-posted to a free Substack.
 2. If open rate justifies it: flashes stay free (distribution), full reviews + models move to a
-   paid tier (~$10/mo). Models are the paywall-worthy artifact — *contingent on the merge-gate-1
-   ToS ruling; selling artifacts containing Daloopa's licensed data may require their permission
-   or a rebuild on Plan B (EDGAR-sourced) data.*
+   paid tier (~$10/mo). The models are the paywall-worthy artifact — and because they're built by
+   us from public SEC data, **there is no licensing question about selling them** (this is the
+   clean win from dropping the vendor).
 3. Do not gate the scorecard — transparency is the brand.
