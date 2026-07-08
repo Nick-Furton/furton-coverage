@@ -42,6 +42,12 @@ anything — it defines the phases, session pairings, and path ownership.
 - **Grading benchmark = management guidance** (itself an EDGAR artifact; consensus is cited color
   only). Numeric calls are graded deterministically by score.py — no LLM in the grading path;
   Claude never grades its own quantitative calls.
+- **GAAP/non-GAAP basis:** guidance & grading actuals come from the 8-K press release (company's
+  own basis); XBRL companyfacts (GAAP) is for the model/history only. Every call & guidance
+  record carries a `basis` field; score.py refuses to grade across bases. Getting this wrong
+  silently biases the scorecard.
+- **Tests:** edgar.py has golden-fixture parser tests, score.py has grading unit tests (both in
+  tests/). `pytest` must pass before a merge gate closes.
 - **Flash (T+0) source = the earnings 8-K (Exhibit 99.1) from EDGAR + web for color.** A missed
   T+0 becomes an honestly-timestamped delayed flash — never backdated; a skipped print gets a
   dated skip note.

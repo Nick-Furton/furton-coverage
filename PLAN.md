@@ -92,6 +92,8 @@ Furton Coverage/
 │   ├── build_site.py         # notes/ + scorecard/ + models/ → docs/ static site
 │   ├── refresh_calendar.py   # upcoming earnings dates → config/calendar.json
 │   └── score.py              # recompute accuracy stats → scorecard/summary.json
+├── tests/                    # pytest: golden-fixture parser tests + score.py grading unit tests
+│   └── fixtures/             # saved companyfacts JSON + 8-K samples → parse must stay stable
 ├── site_src/                 # templates/CSS for the generator (matches furton.ai v2 style)
 └── docs/                     # generated static site — GitHub Pages serves this; never hand-edit
 ```
@@ -123,6 +125,14 @@ Furton Coverage/
 - **Grading is deterministic, not self-graded.** score.py compares numeric calls to actuals in
   code; Claude never grades its own quantitative calls. Only explicitly-qualitative calls get a
   judgment pass, and that prompt must quote both the original call and the evidence verbatim.
+- **GAAP vs non-GAAP basis — the subtle trap.** Companies guide to, and the market reacts to,
+  *non-GAAP* figures (adjusted EPS, adjusted revenue). XBRL companyfacts is *GAAP*. So the
+  actuals used to GRADE a guidance-based call must come from the earnings 8-K press release —
+  which reports the company's own non-GAAP numbers on the same basis as its guidance — NOT from
+  companyfacts. Rule: **companyfacts/XBRL is for the model and history; the 8-K press release is
+  the grading source.** Every call and guidance record stores its `basis` (gaap | non_gaap) and
+  score.py refuses to compare across bases. Getting this wrong silently biases the whole
+  scorecard — it is the EDGAR-era sibling of the Daloopa hole.
 - **Flash (T+0) source = the earnings 8-K (Exhibit 99.1) pulled straight from EDGAR**, plus web
   for color. EDGAR posts 8-Ks within minutes of release, so the flash is *faster* on EDGAR than
   it would have been waiting on a vendor to digitize.
@@ -183,29 +193,41 @@ write network/EDGAR code; Session 2 must NOT edit config/ (it proposes via _inbo
 > the data spine), and do NOT touch notes/, scorecard/, or site_src/. Commit as [S1], push,
 > append a handoff to notes/_inbox/handoffs.md.
 
-**Session 2 — EDGAR data spine & universe validation** *(owns: `scripts/edgar.py`, `notes/_inbox/edgar_report.md`)*
+**Session 2 — EDGAR data spine & universe validation** *(owns: `scripts/edgar.py`, `tests/` + `tests/fixtures/`, `notes/_inbox/edgar_report.md`)*
 
 > Read CLAUDE.md and PLAN.md. You are Session 2 (EDGAR data spine). Build and test scripts/edgar.py
-> — the module every other script imports. It must: (a) resolve ticker→CIK; (b) fetch & cache the
-> XBRL companyfacts JSON for a CIK and extract named concepts (revenue, EPS, and a company's
-> key KPIs) with history; (c) fetch the submissions index and locate a company's most recent
-> quarterly earnings 8-K and its Exhibit 99.1 press-release document; (d) enforce ALL SEC
-> etiquette (User-Agent from settings.json, ≤10 req/s, backoff, cache in data/raw/). Then VALIDATE
-> the candidate universe: for each candidate ticker in config/universe.json (if Session 1 hasn't
-> committed it, use NVDA MSFT AMZN GOOGL META COST JPM LLY CAT NFLX AMD UNH DE PANW CRM), score
-> EDGAR data depth in notes/_inbox/edgar_report.md — a table rating each on XBRL richness (are
-> segments/KPIs actually tagged, or only headline financials?), whether their earnings 8-K
-> press releases are cleanly machine-parseable for reported numbers AND forward guidance, and
-> history length. Flag names whose guidance is hard to extract from press-release text — that's
-> the fragile part of this whole architecture. Recommend the final 10 with one line each,
-> respecting the ≤3-Dow-overlap policy in §2. Do NOT edit config/ — the merge gate finalizes the
-> universe. Commit as [S2], push, append a handoff.
+> — the module every other script imports. FIRST evaluate whether the `edgartools` Python library
+> (the community-standard EDGAR wrapper — pip-installable, widely used) does the heavy lifting for
+> companyfacts + filing retrieval rather than hand-rolling every HTTP call; if it's solid, wrap it
+> and note the decision in the handoff, else build direct against data.sec.gov. edgar.py must:
+> (a) resolve ticker→CIK; (b) fetch & cache XBRL companyfacts and extract named concepts (revenue,
+> EPS, key KPIs) with history; (c) fetch the submissions index and locate a company's most recent
+> quarterly **earnings** 8-K — specifically the one filed under **Item 2.02 (Results of
+> Operations) carrying Exhibit 99.1** (there are many 8-Ks; grabbing the wrong one silently
+> poisons everything, so match on item + exhibit and FAIL LOUD if you can't identify it uniquely);
+> (d) enforce ALL SEC etiquette (User-Agent from settings.json, ≤10 req/s, backoff, cache in
+> data/raw/). Then VALIDATE the candidate universe: for each candidate ticker in config/universe.json
+> (if Session 1 hasn't committed it, use NVDA MSFT AMZN GOOGL META COST JPM LLY CAT NFLX AMD UNH DE
+> PANW CRM), score EDGAR data depth in notes/_inbox/edgar_report.md — a table rating each on XBRL
+> richness (are segments/KPIs actually tagged, or only headline financials?), history length, and
+> the make-or-break test: **does the company put QUANTITATIVE forward guidance IN its 8-K press
+> release, on a stated GAAP/non-GAAP basis?** Many companies guide only verbally on the call —
+> which EDGAR does not carry — so their calls would be ungradeable. Mark each candidate
+> guidable / call-only / no-guidance. A call-only name is a hard exclude unless we accept it can't
+> be scored. Recommend the final 10 with one line each, respecting the ≤3-Dow-overlap policy in §2.
+> Finally, set up pytest and write GOLDEN-FIXTURE tests: save a couple of real companyfacts JSONs
+> and 8-K samples into tests/fixtures/ and assert edgar.py extracts the expected concepts + finds
+> the right Item-2.02 8-K from them. These are the regression net that catches EDGAR format drift
+> later — the parity feature Form D Radar has and this project was missing. Do NOT edit config/ —
+> the merge gate finalizes the universe. Commit as [S2], push, append a handoff.
 
 **Merge gate 1:** Nick picks the final 10 → set `candidate` flags in universe.json, confirm each
-has a resolved CIK, run refresh_calendar.py, commit. *Universe is now frozen; changes require a
-dated note.* Sanity-check edgar.py against 2 names by hand (does companyfacts return what you
-expect? does it find the right 8-K?). Run the fewer-permission-prompts skill — eight more
-sessions run in this repo and every permission nag is paid eight times.
+has a resolved CIK, run refresh_calendar.py, commit. **Reject call-only names** (guidance not in
+the 8-K) unless you deliberately accept an ungradeable name and note why. *Universe is now
+frozen; changes require a dated note.* Sanity-check edgar.py against 2 names by hand (does
+companyfacts return what you expect? does it find the RIGHT earnings 8-K — Item 2.02 + EX-99.1?).
+Run the fewer-permission-prompts skill — eight more sessions run in this repo and every
+permission nag is paid eight times.
 
 ---
 
@@ -247,16 +269,22 @@ sessions run in this repo and every permission nag is paid eight times.
 > to read ALL shards and compute per-ticker and aggregate stats: our hit rate by call type,
 > management guidance accuracy (beat/met/missed own guidance), calibration over time; output
 > scorecard/summary.json. Grading of numeric calls is DETERMINISTIC — score.py compares call vs.
-> actual in code; no LLM in the grading path. Seed with realistic dummy data flagged
+> actual in code; no LLM in the grading path. CRITICAL: every call and guidance record carries a
+> `basis` (gaap | non_gaap) field, and score.py MUST refuse to grade a non_gaap call against a
+> gaap actual (or vice-versa) — a mismatched-basis comparison raises, it does not silently score
+> (see §3 GAAP-trap rule). Write pytest unit tests for the grading logic covering beat/met/miss,
+> the basis-mismatch refusal, and malformed input. Seed with realistic dummy data flagged
 > `"dummy": true` so the site pair can build against real structure. Fail loudly on malformed
 > entries — same fail-loud philosophy as Furton Research's vote parser. Do NOT touch notes/
 > templates. Commit as [S4], push, append a handoff.
 
 **Merge gate 2:** wire check — do Session 3's frontmatter fields carry everything score.py needs
-to link a call to its note, and does the guidance schema capture the source 8-K URL? Fix
-mismatches now, solo. Delete nothing; flag dummies. Run /code-review (medium) over the phase's
-diff — a silent math bug in score.py poisons the public scorecard, and a parse bug in edgar.py
-poisons every number; this is the cheapest moment to catch both.
+to link a call to its note, does the guidance schema capture the source 8-K URL AND the `basis`,
+and does every numeric call carry a `basis`? Fix mismatches now, solo. Delete nothing; flag
+dummies. **Run `pytest` — both sessions' test suites must pass green** before proceeding. Run
+/code-review (medium) over the phase's diff — a silent math bug in score.py poisons the public
+scorecard, and a parse bug in edgar.py poisons every number; this is the cheapest moment to catch
+both.
 
 ---
 
@@ -339,9 +367,11 @@ one real cycle has run).
 
 > Read CLAUDE.md and PLAN.md. You are Session 9 (polish). Run the impeccable audit and polish
 > passes plus the dataviz skill over the site: scorecard charts, per-ticker pages, responsive
-> behavior, dark mode, favicon/OG tags. Beware the curly-apostrophe JS gotcha from the furton.ai
-> polish pass. Verify everything on port 8802 with preview tools before committing. Do NOT touch
-> content in notes/ or scorecard data. Commit as [S9], push, append a handoff.
+> behavior, dark mode, favicon/OG tags. Also run an accessibility pass (contrast, chart alt-text,
+> keyboard nav) — evaluate the a11y-audit skill noted in PLAN.md §7b, or do it by hand; a public
+> data site should not fail a screen reader. Beware the curly-apostrophe JS gotcha from the
+> furton.ai polish pass. Verify everything on port 8802 with preview tools before committing. Do
+> NOT touch content in notes/ or scorecard data. Commit as [S9], push, append a handoff.
 
 **Session 10 — Publishing & positioning** *(owns: `docs/CNAME`, `README.md`, methodology one-pager, `notes/_inbox/resume_bullets.md`)*
 
@@ -393,6 +423,15 @@ believable.
   and quarter. Mitigations: adversarial verification of every extracted figure against the source
   (Session 7), storing the source_filing URL so any number is auditable, and recording "no
   quantitative guidance given" honestly instead of inventing one. This is the top thing to watch.
+- **GAAP/non-GAAP basis mismatch** (the §3 trap): grading a non-GAAP guidance call against a GAAP
+  companyfacts actual silently biases every accuracy stat. Enforced by the `basis` field + score.py's
+  refuse-to-cross-bases rule + unit tests — but it's invisible if that discipline slips, so it's
+  named here as a standing watch item.
+- **Wrong-8-K risk:** a company files many 8-Ks; edgar.py must pick the Item 2.02 / EX-99.1
+  earnings one and fail loud if it can't, or a flash could grade against the wrong document.
+- **Guidance may be call-only.** Some companies give guidance verbally on the earnings call,
+  which EDGAR does not carry. Session 2 screens these out of the universe; the honest limitation
+  (we can only cover names that guide in writing) goes in the methodology.
 - **XBRL tagging quality varies by company.** Headline financials are reliably tagged; segment
   and KPI detail is not always. Session 2's universe scoring exists to weed out poorly-tagged
   names before they're frozen into the roster.
@@ -408,6 +447,24 @@ believable.
 - **Upside vs. the old plan:** no vendor auth, no quota, no ToS, no cost, fully headless-capable,
   and everything published is public-domain-sourced and ours. The EDGAR spine is also shared DNA
   with Form D Radar — a cleaner three-project story.
+
+## 7b. Optional skills to evaluate (found via find-skills, 2026-07-08)
+
+Discovered in the `npx skills` ecosystem. All are third-party — treat as *evaluate, don't
+auto-trust*; install only after a look, and only if they clear the bar (installs, source). None
+is required; each just saves work at one session.
+
+- **EDGAR library, not a skill — the real find:** the `edgartools` Python package is the
+  community-standard EDGAR/XBRL wrapper. Session 2 evaluates it before hand-rolling edgar.py
+  (baked into the kickoff). This is where the search paid off most: it may cut the data-spine
+  build substantially. The EDGAR *skills* found (eng0ai/…@sec-edgar-skill ~219 installs, etc.)
+  are low-install and unofficial — prefer the vetted library over an unvetted skill wrapper.
+- **Accessibility audit (Session 9 polish):** `alirezarezvani/claude-skills@a11y-audit`
+  (~721 installs) is the strongest a11y option — a public, chart-heavy site should pass a
+  screen-reader/contrast check the impeccable pass may not fully cover. Evaluate at Phase 5.
+- **Testing:** searched — nothing trustworthy (top hits <30 installs). Don't chase a skill;
+  Sessions 2 & 4 use plain `pytest`, which needs none. *(This is the honest non-result: find-skills
+  helps sometimes, not always.)*
 
 ## 8. Revenue Path (optional, after one full quarter)
 
