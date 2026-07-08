@@ -1,0 +1,18 @@
+{
+  "_note": "Web-search-sourced next-earnings dates, gathered by Session 1 on 2026-07-08 (the 'web search is fine as the source' path from the kickoff). Consumed by scripts/refresh_calendar.py --provider seed. Every entry carries a source_url so any date is auditable. confidence: 'confirmed' = company/exchange announced; 'estimated' = projected from history / aggregator estimate. Re-run a web pass and update this file when dates firm up or after each print.",
+  "NVDA": {"date": "2026-08-26", "confidence": "estimated",  "time_of_day": "after_market",  "source_url": "https://www.tipranks.com/stocks/nvda/earnings"},
+  "MU":   {"date": "2026-09-29", "confidence": "confirmed",  "time_of_day": "after_market",  "source_url": "https://www.tipranks.com/stocks/mu/earnings"},
+  "CRM":  {"date": "2026-08-26", "confidence": "estimated",  "time_of_day": "after_market",  "source_url": "https://www.marketbeat.com/stocks/NYSE/CRM/earnings/"},
+  "ORCL": {"date": "2026-09-14", "confidence": "confirmed",  "time_of_day": "after_market",  "source_url": "https://www.tipranks.com/stocks/orcl/earnings"},
+  "PANW": {"date": "2026-08-24", "confidence": "estimated",  "time_of_day": "after_market",  "source_url": "https://www.tipranks.com/stocks/panw/earnings"},
+  "NFLX": {"date": "2026-07-16", "confidence": "confirmed",  "time_of_day": "after_market",  "source_url": "https://ir.netflix.net/investor-news-and-events/financial-releases/press-release-details/2026/Netflix-to-Announce-Second-Quarter-2026-Financial-Results/default.aspx"},
+  "META": {"date": "2026-07-29", "confidence": "confirmed",  "time_of_day": "after_market",  "source_url": "https://marketchameleon.com/Overview/META/Earnings/Earnings-Dates/"},
+  "LLY":  {"date": "2026-08-05", "confidence": "confirmed",  "time_of_day": "before_market", "source_url": "https://marketchameleon.com/Overview/LLY/Earnings/Earnings-Dates/"},
+  "ISRG": {"date": "2026-07-16", "confidence": "confirmed",  "time_of_day": "after_market",  "source_url": "https://www.tipranks.com/stocks/isrg/earnings"},
+  "UNH":  {"date": "2026-07-16", "confidence": "confirmed",  "time_of_day": "before_market", "source_url": "https://www.unitedhealthgroup.com/newsroom/2026/2026-06-11-uhg-announces-q2-earnings-release-date.html"},
+  "DE":   {"date": "2026-08-20", "confidence": "estimated",  "time_of_day": "before_market", "source_url": "https://www.marketbeat.com/stocks/NYSE/DE/earnings/"},
+  "GE":   {"date": "2026-07-16", "confidence": "confirmed",  "time_of_day": "before_market", "source_url": "https://www.geaerospace.com/investor-relations/events-reports/ge-aerospace-2nd-quarter-2026-earnings-webcast"},
+  "SBUX": {"date": "2026-08-04", "confidence": "confirmed",  "time_of_day": "after_market",  "source_url": "https://www.tipranks.com/stocks/sbux/earnings"},
+  "PEP":  {"date": "2026-07-09", "confidence": "confirmed",  "time_of_day": "before_market", "source_url": "https://www.stocktitan.net/news/PEP/pepsi-co-announces-timing-and-availability-of-second-quarter-2026-qw5aeek7utzl.html"},
+  "V":    {"date": "2026-07-28", "confidence": "confirmed",  "time_of_day": "after_market",  "source_url": "https://investor.visa.com/news/news-details/2026/Visa-Fiscal-Second-Quarter-2026-Financial-Results/default.aspx"}
+}

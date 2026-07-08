@@ -1,0 +1,23 @@
+# --- Furton Coverage ---
+
+# Cached raw EDGAR JSON (companyfacts, submissions, 8-K exhibits).
+# edgar.py caches here so nothing is ever refetched; it is machine-local and
+# fully reproducible from the network, so it must NOT be committed. Keep the
+# directory itself in the tree via its .gitkeep.
+data/raw/*
+!data/raw/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp

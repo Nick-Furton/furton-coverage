@@ -1,0 +1,64 @@
+{
+  "_comment": "Central config for Furton Coverage. edgar.py (Session 2) reads sec.* for all network etiquette; every script resolves paths from paths.*. Hand-edited; not generated.",
+
+  "sec": {
+    "user_agent": "Furton Coverage nicholas@furton.com",
+    "_user_agent_note": "SEC etiquette REQUIRES a descriptive User-Agent naming a real contact. This email is intentionally public (same identity Form D Radar uses). Sent on EVERY request to sec.gov / data.sec.gov / efts.sec.gov.",
+
+    "rate_limit_per_sec": 10,
+    "_rate_limit_note": "SEC's hard cap is 10 requests/second per source. Stay at or under; edgar.py must throttle to this.",
+    "min_interval_ms": 100,
+
+    "backoff": {
+      "max_retries": 5,
+      "initial_delay_ms": 1000,
+      "multiplier": 2.0,
+      "max_delay_ms": 30000,
+      "retry_on_status": [403, 429, 500, 502, 503, 504]
+    },
+
+    "timeout_sec": 30,
+
+    "hosts": {
+      "www": "https://www.sec.gov",
+      "data": "https://data.sec.gov",
+      "fulltext_search": "https://efts.sec.gov"
+    },
+    "endpoints": {
+      "company_tickers": "https://www.sec.gov/files/company_tickers.json",
+      "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik10}.json",
+      "companyconcept": "https://data.sec.gov/api/xbrl/companyconcept/CIK{cik10}/{taxonomy}/{concept}.json",
+      "submissions": "https://data.sec.gov/submissions/CIK{cik10}.json",
+      "fulltext_search": "https://efts.sec.gov/LATEST/search-index?q={query}"
+    },
+    "_endpoints_note": "Session 2 (edgar.py) owns how these are called. {cik10} = 10-digit zero-padded CIK. Listed here so the etiquette + URL templates live in one config, not scattered in code."
+  },
+
+  "paths": {
+    "config_dir": "config",
+    "universe": "config/universe.json",
+    "calendar": "config/calendar.json",
+    "raw_cache": "data/raw",
+    "notes_dir": "notes",
+    "models_dir": "models",
+    "scorecard_dir": "scorecard",
+    "scorecard_calls": "scorecard/calls",
+    "scorecard_guidance": "scorecard/guidance",
+    "scorecard_summary": "scorecard/summary.json",
+    "site_src": "site_src",
+    "site_out": "docs",
+    "tests_fixtures": "tests/fixtures"
+  },
+
+  "site": {
+    "preview_port": 8802,
+    "_port_note": "8801 = website v2, 8899 = Schwab Analysis, 8765 = Furton engine, 8803 = Form D Radar. 8802 is ours.",
+    "base_url": "https://coverage.furton.ai",
+    "disclaimer": "Educational research generated from public SEC EDGAR filings. Not investment advice."
+  },
+
+  "calendar": {
+    "warn_within_hours": 48,
+    "_warn_note": "Session 8's scheduled task notifies Nick when a covered name reports within this window."
+  }
+}
