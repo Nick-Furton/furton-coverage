@@ -105,3 +105,39 @@ AI book; the marginal correlation risk wasn't worth the 2 slots.
 - **basis: AMZN and DE are GAAP-basis guides; the other 8 are non-GAAP** (score.py depends on it).
 - **Top alternates:** META (swap for CRWD if you want the mega-cap ads read), then NOW, NFLX, ISRG.
 - Calendar: Feb/May/Aug/Nov is the heavy window; peak weeks late-Feb & early-Mar are real work.
+
+---
+
+## [S1] Merge-gate universe freeze — 2026-07-08
+
+**Did:** Applied Session 2's §7 roster ruling to `config/universe.json` (my file — S2 can't edit
+config/). **FROZEN 10: NVDA · AMD · AVGO · MU · CRM · PANW · CRWD · AMZN · LLY · DE.** Kept my 6
+surviving candidates (NVDA/MU/CRM/PANW/LLY/DE), added the 4 AI-infra names (AMD/AVGO/CRWD/AMZN) with
+CIKs + FYE + reporting-months + basis from §7b, and set `candidate:false` on the 9 cuts (kept, not
+deleted, as re-promotable alternates with `cut_note`s). Set `guidance_status:guidable` on all 10;
+`basis` = GAAP for AMZN & DE, non-GAAP for the other 8. Web-sourced the 4 new next-earnings dates
+(AMD 08-04, AMZN 07-30, AVGO 09-03, CRWD 09-02 — all after-close, confirmed, cited) into
+`config/calendar.seed.json` and re-ran `refresh_calendar.py` → `calendar.json` now holds exactly the
+10, all resolved (soonest AMZN d+22).
+
+**Verified at the gate:**
+- **Dow overlap = 3 (NVDA, CRM, AMZN), CONFIRMED against the live Dow 30** (web-checked 2026-07-08;
+  GOOGL replaced VZ 2026-06-29). Cutting UNH + V removed the 2 excess Dow names.
+- **Ungradeable names recorded in universe.json `_schema.excluded_do_not_re_add`** so nobody re-adds
+  them: MSFT/AAPL (call-only), GOOGL (no guidance), TSM (foreign filer, no Item-2.02 8-K), V
+  (call-only — its EX-99.1 has no guidance section).
+- JSON validated: 10 candidate:true in roster order, GAAP={AMZN,DE}, Dow={AMZN,CRM,NVDA}.
+
+**Next session must know:**
+- **Universe is FROZEN — changes now require a dated note (PLAN §5).** `_schema.frozen_roster` is the
+  source of truth; alternates in priority order: META (swap for CRWD) → NFLX → ISRG → NOW.
+- **edgar.py CLI sanity-check (gate checklist §7d) is satisfied by S2's live validation** of all 4
+  new names (companyfacts concept counts in §7b; data cached in data/raw/, reproducible) — I did not
+  re-run S2's network tool.
+- **companyfacts is headline-only** (S2 finding, echoed in universe.json `_schema.companyfacts_caveat`):
+  segment/product KPIs (NVDA Data Center, LLY products, DE segments, PANW NGS ARR, CRWD ARR, AWS rev)
+  come from press-release extraction, not companyfacts — build_model.py (Session 3) should plan for it.
+- **Calendar reality for the frozen 10:** the near-term July reporters were all cut, so the desk's
+  first live print is **AMZN on 2026-07-30**, then AMD 08-04, LLY 08-05, DE 08-20... the
+  Feb/May/Aug/Nov window is the heavy one. Re-run refresh_calendar.py after each print / when
+  estimated dates firm up.
