@@ -25,6 +25,28 @@ FAIL-LOUD CONTRACT (same philosophy as Furton Research's vote parser):
 
 This module does NOT touch SEC EDGAR APIs — scripts/edgar.py (Session 2) owns those.
 
+=============================================================================
+SESSION 8 AUTOMATION REQUIREMENT — schedule this in the CLOUD, not locally.
+=============================================================================
+When Session 8 wires the "daily calendar refresh + 48h-warning" job (PLAN §8),
+it MUST run as a CLOUD scheduled agent (the `schedule` skill's routine / cron
+agent), NOT as a local Windows Task Scheduler task. Rationale:
+  * This script + the whole EDGAR spine are no-auth and fully headless, so the
+    daily job has no reason to depend on Nick's machine being on.
+  * A LOCAL scheduled task only fires when the computer is awake — turning the
+    laptop into a pager that must never sleep at the scheduled minute. A cloud
+    routine runs regardless of the laptop's state and can push the "X reports in
+    <48h, run /preview X" notification to Nick's phone.
+  * Net effect Nick asked for: with cloud scheduling the computer can stay
+    ASLEEP for all daily automation; it only needs to be awake when Nick is
+    actively driving /preview /flash /review /digest around a print.
+If a cloud routine is genuinely unavailable and a local task is the only option,
+enable Task Scheduler's "Wake the computer to run this task" AND document the
+degraded behavior (laptop must be plugged in / not fully powered off) in
+RUNBOOK.md — do not silently ship a job that only works when the machine happens
+to be on. (Mirror this note in notes/_inbox/ so it also surfaces at the gate.)
+=============================================================================
+
 Windows: run with `py`; set PYTHONUTF8=1 (console is cp1252).
 
 Usage:
