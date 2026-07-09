@@ -141,3 +141,45 @@ deleted, as re-promotable alternates with `cut_note`s). Set `guidance_status:gui
   first live print is **AMZN on 2026-07-30**, then AMD 08-04, LLY 08-05, DE 08-20... the
   Feb/May/Aug/Nov window is the heavy one. Re-run refresh_calendar.py after each print / when
   estimated dates firm up.
+
+## [S4] Scorecard engine — 2026-07-08
+
+**Did:** Built the scorecard layer end-to-end. `scorecard/SCHEMA.md` defines the two
+per-ticker sharded stores `scorecard/calls/<TICKER>.jsonl` (our calls) and
+`scorecard/guidance/<TICKER>.jsonl` (management guidance vs actuals); every entry is
+timestamped and carries `basis` (gaap|non_gaap), calls carry `source_note`, guidance
+carries `source_filing` (the 8-K URL). `scripts/score.py` reads ALL shards and writes
+`scorecard/summary.json`: our hit rate by call_type / metric / period, guidance
+beat/met/missed, a confidence calibration curve, per-ticker + aggregate rollups.
+**Grading is deterministic (no LLM)** — `grade_call`/`grade_guidance` compare vs actual
+in code. **§3 GAAP trap enforced:** `_check_basis` raises `BasisMismatchError` on any
+cross-basis compare (non_gaap call vs gaap actual), never silently scores. Fail-loud
+(`MalformedRecordError`) on missing/ill-typed fields, invalid basis, unknown kind,
+non-finite numbers, malformed *pending* calls, mis-sharded records, and duplicate ids.
+`tests/test_score.py` = 46 cases (beat/met/miss, basis-mismatch refusal, malformed
+input); **full `pytest` 67 green** (with S2's edgar tests). Ran `/code-review` (medium),
+applied the confirmed fixes. Seeded 5-ticker dummy shards (`"dummy": true`, real
+universe numbers: AMZN/DE gaap, NVDA/AMD/CRWD non_gaap) + a generated `summary.json` so
+S5 can build the site now; `--exclude-dummy` drops them.
+
+**Unfinished / next:** nothing blocking in S4's scope. Merge Gate 2 wire-check is the
+next step (needs S3): confirm S3's note frontmatter carries the fields score.py grades on.
+
+**Next session (esp. S3 + Merge Gate 2) must know:**
+- **The call schema is the contract.** For a numeric call to be gradable, S3's note
+  frontmatter must emit a `scorecard/calls/<TICKER>.jsonl` record with: `id, ticker,
+  timestamp, call_type (preview|flash|review|initiation), period (e.g. FY2026Q3),
+  metric, unit, basis, source_note`, and a `call` object of kind `direction`
+  (value beat|met|miss + `benchmark` band), `range` (low/high), `point` (value/tolerance),
+  or `qualitative`. See `scorecard/SCHEMA.md` for the full table + examples.
+- **basis MUST match between a call and its `actual`** or score.py raises — S3/S7 must pull
+  the grading actual from the 8-K press release (company's own basis), not companyfacts
+  (GAAP). AMZN & DE guide GAAP; the other 8 roster names non-GAAP (universe.json).
+- **`actual` is filled when the print lands** (flash/review appends it to the record);
+  until then the call is `pending` and excluded from hit-rate denominators. Add `confidence`
+  (0..1) to calls to populate the calibration curve. `higher_is_better:false` for
+  cost/capex/opex metrics so beat/met/miss labels stay correct.
+- **ids must be unique** (a correction is a NEW dated record, never a rewrite) — score.py
+  fails loud on a duplicate id across shards. Filename ticker must equal the record ticker.
+- Run `py scripts/score.py` (set PYTHONUTF8=1) to regenerate summary.json; `--selftest`
+  is a quick smoke of the grading core. Merge Gate 3 deletes the dummy rows.
