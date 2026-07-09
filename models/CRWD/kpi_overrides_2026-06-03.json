@@ -1,0 +1,34 @@
+[
+  {
+    "metric": "ending ARR (KPI, GUIDED)",
+    "period": "Q1 FY27 (end 2026-04-30)",
+    "value": 5510,
+    "unit": "USD_M",
+    "description": "Annual Recurring Revenue grew 24% YoY to $5.51B",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000022/crwd-20260603xex991.htm"
+  },
+  {
+    "metric": "net new ARR (KPI)",
+    "period": "Q1 FY27 (end 2026-04-30)",
+    "value": 255.8,
+    "unit": "USD_M",
+    "description": "Q1 net new ARR added in the quarter",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000022/crwd-20260603xex991.htm"
+  },
+  {
+    "metric": "non-GAAP EPS (KPI, GUIDED)",
+    "period": "Q1 FY27 (end 2026-04-30)",
+    "value": 1.10,
+    "unit": "eps_usd",
+    "description": "Non-GAAP net income per share, diluted, Q1 FY27 actual",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000022/crwd-20260603xex991.htm"
+  },
+  {
+    "metric": "subscription gross margin (KPI)",
+    "period": "Q1 FY27 (end 2026-04-30)",
+    "value": 0.81,
+    "unit": "pct",
+    "description": "Non-GAAP subscription gross margin, up from 80% in Q1 FY26",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000022/crwd-20260603xex991.htm"
+  }
+]
