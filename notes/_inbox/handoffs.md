@@ -183,3 +183,74 @@ next step (needs S3): confirm S3's note frontmatter carries the fields score.py 
   fails loud on a duplicate id across shards. Filename ticker must equal the record ticker.
 - Run `py scripts/score.py` (set PYTHONUTF8=1) to regenerate summary.json; `--selftest`
   is a quick smoke of the grading core. Merge Gate 3 deletes the dummy rows.
+
+## [S3] Note templates, build_model.py, publish gate, /preview /flash /review, CRWD backtest — 2026-07-09
+
+**Did:** Designed `notes/_templates/{preview,flash,review,SCHEMA}.md` — frontmatter is
+byte-shape-identical to S4's `scorecard/{calls,guidance}` records (answers S4's Merge
+Gate 2 ask directly: every required field score.py grades on is present). Wrote
+`scripts/build_model.py`: pulls companyfacts via edgar.py, builds a 4-tab Excel model
+(Cover/Income Statement/KPIs/Our Estimates), anchoring every Income Statement row to
+Revenue's period-end set so a metric whose tag went stale (DE's GrossProfit/
+OperatingIncomeLoss) renders blank instead of silently misaligned old data — caught this
+by testing against DE and AMZN, not just CRWD. Built `.claude/skills/{preview,flash,
+review}/` + `_shared/{note_pipeline.md,fact_check_workflow.js}` — the shared publish-gate
+Workflow script fans out one agent per numeric claim (re-fetches the cited EDGAR doc) and
+one refutation pass per qualitative call. Ran the full pipeline as a real backtest on
+CRWD's actual Q1 FY27 print (preview drafted from only pre-print info — the prior 8-K +
+trailing XBRL — then flash/review from the real 8-K + 10-Q), and ran the actual publish
+gate (Workflow tool, live WebFetch) against all three notes as its first real test.
+
+**The gate caught two genuine issues** (not just theoretical): a review-note qualitative
+call cited only one filing to support a claim that really needed two (a cross-document
+sequential comparison), and a flash-note prose figure had no frontmatter record to trace
+to. Both fixed in the notes. **Also surfaced an infra quirk to watch for:** under
+parallel load, at least 2 of ~16 WebFetch-based verifier agents received content from a
+DIFFERENT CRWD filing than the URL they were given (same failure mode both times — an
+agent's "evidence quote" was verbatim from a different accession's document). Confirmed
+via isolated (non-parallel) single-agent re-checks that the original claims were correct
+in both cases. **If a future gate run shows a fail whose evidence_quote doesn't match the
+cited document's actual content/dateline, suspect this before trusting the fail** — re-run
+that one claim in isolation before cutting real content from a note.
+
+Ran `/code-review` (medium) on the full diff: 13 findings, all fixed — a hardcoded `<CIK10>`
+placeholder shipped in every model's footnote, `--kpi-overrides` silently dropping data on
+a ticker/metric-name mismatch, a missing fail-loud guard for a ticker whose Revenue tag is
+itself empty, two dead functions, an overclaiming docstring, and three doc-only schema
+ambiguities (`call_type` persistence across notes, `published_at` for backtests, `actual`
+on qualitative calls). `pytest` 67 green throughout (untouched — didn't touch edgar.py/
+score.py/tests/). Did NOT touch `scorecard/` or `score.py`.
+
+**Unfinished / for the gate:** Backtest notes' `calls:`/`guidance:` are NOT yet appended
+into `scorecard/calls|guidance/CRWD.jsonl` — that's explicitly Session 6/7's job per their
+kickoff (extraction from notes into shards). **One gotcha for whoever wires that:** a
+preview call and its later flash grading share one `id` on purpose (same call, `actual`
+added later) — extract each `id` exactly once, from whichever note first resolves it, or
+score.py's `_assert_unique_ids` raises the moment both get appended. Documented in
+`.claude/skills/_shared/note_pipeline.md`'s "Not yet wired" section.
+
+**Next session must know:**
+- **Merge Gate 2 wire-check should now pass:** notes/_templates/SCHEMA.md's `calls:`/
+  `guidance:` shapes were built directly against scorecard/SCHEMA.md's field list (id,
+  ticker, timestamp, call_type, period, metric, unit, basis, source_note/source_filing,
+  call, actual, higher_is_better, confidence, rationale) — verified by hand, not just by
+  intent. `basis`/`higher_is_better` are present on every CRWD backtest record.
+- **build_model.py works for any resolvable ticker**, not just the frozen 10 — tested
+  live against CRWD, AMZN, and DE. `--kpi-overrides <json>` is the mechanism for
+  press-release-sourced KPIs (never fabricated; TBD/yellow-flagged otherwise, with a
+  loud warning if an override's `metric` string doesn't match universe.json).
+- **Skipped skill-creator's full eval/benchmark harness** (parallel subagent test runs +
+  browser viewer) as disproportionate for these internal, deterministic-pipeline
+  commands — the real backtest + live publish-gate run served as the actual validation.
+  Flagging in case a later session wants to run that harness anyway for triggering-
+  accuracy tuning (the SKILL.md descriptions haven't been eval-optimized).
+- **A concurrent session (not S3) has an in-progress, uncommitted addition to CLAUDE.md**
+  (a cross-project status-board section referencing `..\status-dashboard.html`) sitting
+  in the shared working tree as of this handoff — I did not commit, stage, or touch it
+  (stashed and restored it cleanly to run my own `git pull --rebase`). Whoever owns that
+  work should commit it themselves.
+- `requirements.txt` (repo root) is new — added `openpyxl` (build_model.py's dependency)
+  alongside `pytest`/`ruff`. No LibreOffice on this machine, so `build_model.py` can't run
+  `scripts/recalc.py`-style formula recalculation; it does its own pure-Python data/
+  div-by-zero self-check instead (documented limitation — open the .xlsx in Excel to
+  confirm formulas compute, don't just trust the build-time check for cell references).
