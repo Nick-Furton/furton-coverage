@@ -288,3 +288,43 @@ Standing residual from Gate 1: Nick still needs to run `/fewer-permission-prompt
 interactive session. S6 must read `gate2_build_model_followups.md` before trusting model
 output, and follow note SCHEMA.md's new initiation section + the unique-id extraction rule
 in note_pipeline.md.
+
+## [S5] Site generator & design — 2026-07-11
+
+**Did:** Built `scripts/build_site.py` + `site_src/{base.html,style.css}` → `docs/` (17 pages,
+committed + pushed): home (universe grid, next-print countdown, headline stats), per-ticker pages
+(note timeline, call record, guidance tracker, Excel-model download), filterable research library,
+scorecard page (4 Chart.js charts w/ dataviz-skill-validated palette + accessible table view),
+methodology stub, and every note rendered to HTML. Visual language = furton.ai v2's design system
+**deliberately verbatim** (Nick's kickoff override of PLAN's "different accent" — the sites may
+share a domain); the sibling cue is the cyan favicon mark + "Furton Coverage" wordmark.
+`.claude/launch.json` serves docs/ on **8802**; verified with preview tools (structure snapshots,
+CSS inspection, mobile 375px, dark-native, filter/countdown interactions, zero console/network
+errors). Ran /code-review (8 finder angles) and fixed everything confirmed: grading chips + shard
+loading now **delegate to score.py** (no presentation-side re-implementation to drift; build fails
+loud on any record score.py rejects), fail-loud calendar/summary/frontmatter validation (all 9
+SCHEMA.md fields), markdown hardening (code-span isolation, `javascript:` links neutralized,
+fenced blocks, `</script>`-safe JSON), SRI-pinned Chart.js, display-name map (NVIDIA not "Nvidia"),
+unit-labeled call targets, stale-`docs/` cleanup each build, ET-anchored countdown, noscript +
+aria-pressed a11y. `pytest` 67 green, ruff clean, `pyyaml` added to requirements.txt.
+
+**Unfinished:** Universe prose on home is still hand-written copy (counts/Dow-overlap now derive
+from config, but the sector narrative is static — fine until the roster changes). Scorecard/ticker
+tables render ONLY dummy shards (real CRWD backtest calls live in note frontmatter until S6/S7
+extract them — the site labels every dummy row "sample" + banner, and tiles carry a "sample data"
+badge, so Gate 3's dummy deletion will visibly empty the boards until real records land).
+`preview_screenshot` times out on this machine this session (tool issue, not the site — pages are
+fully interactive; verified via snapshot/inspect/eval instead).
+
+**Next session must know:** `docs/` is fully generated — rebuild with `PYTHONUTF8=1 py
+scripts/build_site.py` after ANY notes/scorecard/models/config change; the build DELETES generated
+docs/ subtrees first (preserves .gitkeep/CNAME/unknown files). It fails loud by design on: notes
+missing any of the 9 required frontmatter fields, shard records score.py rejects (incl. duplicate
+ids), model files not named `<TICKER>_model_<YYYY-MM-DD>.xlsx`, non-YYYY-MM-DD calendar dates,
+unterminated ``` fences — if S6's initiation notes break the build, the note (not the generator)
+is almost certainly violating SCHEMA.md. score.py is imported by the generator; if S8+ changes
+score.py's grading API (grade_call/grade_guidance/load_all_* signatures), build_site.py must
+follow. Chart.js is SRI-pinned to 4.4.3 — bumping the CDN version requires recomputing the hash
+in CHARTJS_SRI. Site preview: launch config "coverage-site" (port 8802) in THIS repo's
+.claude/launch.json (a duplicate entry also sits in Furton Research's gitignored launch.json
+because preview tools read the primary session dir).
