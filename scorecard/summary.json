@@ -1,35 +1,42 @@
 {
-  "generated_at": "2026-07-09T04:11:27+00:00",
+  "generated_at": "2026-07-11T23:42:38+00:00",
   "totals": {
-    "call_records": 11,
+    "call_records": 13,
     "guidance_records": 8,
-    "calls_graded": 8,
-    "calls_pending": 2,
-    "calls_qualitative": 1,
+    "calls_graded": 6,
+    "calls_pending": 4,
+    "calls_qualitative": 3,
     "guidance_graded": 6,
     "guidance_pending": 2,
     "tickers": 5
   },
   "our_calls": {
     "overall": {
-      "n_graded": 8,
-      "hits": 6,
-      "hit_rate": 0.75,
-      "pending": 2,
-      "qualitative": 1
+      "n_graded": 6,
+      "hits": 5,
+      "hit_rate": 0.8333,
+      "pending": 4,
+      "qualitative": 3
     },
     "by_call_type": {
       "flash": {
-        "n_graded": 3,
+        "n_graded": 2,
         "hits": 2,
-        "hit_rate": 0.6667,
+        "hit_rate": 1.0,
         "pending": 1,
         "qualitative": 0
       },
+      "initiation": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 2,
+        "qualitative": 2
+      },
       "preview": {
-        "n_graded": 4,
-        "hits": 3,
-        "hit_rate": 0.75,
+        "n_graded": 3,
+        "hits": 2,
+        "hit_rate": 0.6667,
         "pending": 0,
         "qualitative": 0
       },
@@ -56,6 +63,13 @@
         "pending": 0,
         "qualitative": 1
       },
+      "data_center_revenue_growth_qualitative": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 0,
+        "qualitative": 1
+      },
       "ending_arr": {
         "n_graded": 1,
         "hits": 1,
@@ -71,11 +85,18 @@
         "qualitative": 0
       },
       "gross_margin": {
-        "n_graded": 2,
+        "n_graded": 1,
         "hits": 1,
-        "hit_rate": 0.5,
+        "hit_rate": 1.0,
         "pending": 0,
         "qualitative": 0
+      },
+      "gross_margin_trajectory_qualitative": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 0,
+        "qualitative": 1
       },
       "net_income": {
         "n_graded": 1,
@@ -91,6 +112,13 @@
         "pending": 0,
         "qualitative": 0
       },
+      "non_gaap_gross_margin": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 1,
+        "qualitative": 0
+      },
       "operating_income": {
         "n_graded": 0,
         "hits": 0,
@@ -99,10 +127,10 @@
         "qualitative": 0
       },
       "revenue": {
-        "n_graded": 2,
-        "hits": 2,
+        "n_graded": 1,
+        "hits": 1,
         "hit_rate": 1.0,
-        "pending": 0,
+        "pending": 1,
         "qualitative": 0
       }
     },
@@ -112,11 +140,18 @@
         "hits": 1,
         "hit_rate": 1.0,
         "pending": 0,
+        "qualitative": 2
+      },
+      "FY2026Q2": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 2,
         "qualitative": 0
       },
       "FY2026Q3": {
-        "n_graded": 4,
-        "hits": 2,
+        "n_graded": 2,
+        "hits": 1,
         "hit_rate": 0.5,
         "pending": 0,
         "qualitative": 0
@@ -151,7 +186,7 @@
       }
     },
     "calibration": {
-      "scored_calls_with_confidence": 8,
+      "scored_calls_with_confidence": 6,
       "bins": [
         {
           "lo": 0.0,
@@ -196,18 +231,18 @@
         {
           "lo": 0.5,
           "hi": 0.6,
-          "n": 1,
-          "hits": 1,
-          "empirical_rate": 1.0,
-          "mean_confidence": 0.55
+          "n": 0,
+          "hits": 0,
+          "empirical_rate": null,
+          "mean_confidence": null
         },
         {
           "lo": 0.6,
           "hi": 0.7,
-          "n": 5,
+          "n": 4,
           "hits": 3,
-          "empirical_rate": 0.6,
-          "mean_confidence": 0.62
+          "empirical_rate": 0.75,
+          "mean_confidence": 0.625
         },
         {
           "lo": 0.7,
@@ -323,11 +358,11 @@
   "by_ticker": {
     "AMD": {
       "our_calls": {
-        "n_graded": 2,
-        "hits": 1,
-        "hit_rate": 0.5,
-        "pending": 0,
-        "qualitative": 0
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 2,
+        "qualitative": 2
       },
       "guidance": {
         "n_graded": 1,
@@ -404,7 +439,7 @@
   },
   "dummy": {
     "included": true,
-    "call_records": 11,
+    "call_records": 9,
     "guidance_records": 8
   },
   "warnings": []
