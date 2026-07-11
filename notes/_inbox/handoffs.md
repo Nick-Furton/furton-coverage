@@ -254,3 +254,37 @@ score.py's `_assert_unique_ids` raises the moment both get appended. Documented 
   `scripts/recalc.py`-style formula recalculation; it does its own pure-Python data/
   div-by-zero self-check instead (documented limitation — open the .xlsx in Excel to
   confirm formulas compute, don't just trust the build-time check for cell references).
+
+## [Merge Gate 2] Phase 2 closed — 2026-07-11 (run by S4, solo)
+
+**Did:** Ran Merge Gate 2 end to end. (1) **Wire-check GREEN** — extracted the real CRWD
+backtest notes' `calls:`/`guidance:` frontmatter and round-tripped every record through
+score.py (validate + grade); grades match the flash note's own table (revenue HIT, EPS
+HIT, ARR MISS), every call carries `source_note`, every guidance carries `source_filing`,
+every record carries `basis`, the basis guard raises on a crossed-basis actual, and
+compute_summary rolls up with no duplicate-id error. (2) **pytest 67 green** (edgar + score
+suites). (3) **`/code-review` (medium)** over the combined S3+S4 phase diff (2 finder
+lenses: build_model correctness + S3↔S4 integration).
+
+**Fixed at the gate (low-risk, scorecard-contract doc/template edits):**
+- `higher_is_better` caveat added to all three note templates + note SCHEMA.md — a
+  cost/capex/opex call left at the default `true` would invert score.py's beat/miss.
+- Flash template now carries `confidence:` forward when it copies a preview call (and
+  note_pipeline.md's extraction gotcha spells this out) — otherwise the flash copy that
+  gets extracted drops confidence and the calibration curve stays empty.
+- Note SCHEMA.md now documents the **initiation** note shape (reuse preview frontmatter,
+  drop `guidance:`, `call_type: initiation`) so Session 6 isn't blocked.
+
+**Deferred (logged, NOT fixed at the gate):** 5 real `build_model.py` defects (margin
+`0.0%`-instead-of-blank, YoY fixed-column offset, 52/53-week period label, provenance
+footnote wording, annual-tag abort) → `notes/_inbox/gate2_build_model_followups.md`. They
+sit in an untested, live-EDGAR-dependent engine; they touch neither the scorecard nor the
+S3↔S4 wire contract, and need a dedicated build_model hardening pass with live validation
+**before Session 6 relies on the Excel models**. Dummy scorecard rows kept (deleted at
+Gate 3, per plan).
+
+**Next:** Phase 3 is unblocked — Session 5 (site generator) ∥ Session 6 (initiations 1–5).
+Standing residual from Gate 1: Nick still needs to run `/fewer-permission-prompts` in an
+interactive session. S6 must read `gate2_build_model_followups.md` before trusting model
+output, and follow note SCHEMA.md's new initiation section + the unique-id extraction rule
+in note_pipeline.md.

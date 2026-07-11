@@ -152,3 +152,11 @@ notes, not two calls. Whoever wires the append step must extract each `id` into
 carry a resolved `actual` for it (typically the flash, or the review if the flash left
 it pending) -- never from both notes, or `score.py`'s `_assert_unique_ids` guard
 (scorecard/SCHEMA.md) raises on the duplicate `id` the moment both get appended.
+
+**Second gotcha (carry originating-note-only fields):** the note that resolves a call
+(the flash/review) must copy the call record from the preview *verbatim* and only add
+`actual` -- in particular it must preserve `confidence`, which the preview set and which
+the flash otherwise silently drops. The extracted-once record is the flash's copy, so if
+that copy lacks `confidence`, `score.py`'s calibration curve never sees the call and the
+public reliability chart stays empty. Flash/review template blocks carry a `confidence:`
+line for this reason; keep it equal to the preview's value.

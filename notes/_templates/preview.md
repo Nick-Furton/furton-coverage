@@ -33,7 +33,7 @@ guidance:
     basis: "{{gaap|non_gaap}}"
     period: "{{FY20XXQn}}"              # period the guidance is FOR
     guided_at_period: "{{FY20XXQn}}"    # the quarter whose 8-K ISSUED this guidance
-    higher_is_better: true
+    higher_is_better: true    # true for revenue/EPS/ARR/margins; set to false for cost/capex/opex or score.py inverts beat/miss
     guidance:
       kind: range   # or point
       low: 0.0
@@ -51,7 +51,7 @@ calls:
     unit: "{{unit}}"
     basis: "{{gaap|non_gaap}}"
     source_note: "notes/{{TICKER}}/{{YYYY-MM-DD}}_preview.md"
-    higher_is_better: true
+    higher_is_better: true    # true for revenue/EPS/ARR/margins; set to false for cost/capex/opex or score.py inverts beat/miss
     confidence: 0.0   # optional, 0.0-1.0
     call:
       kind: direction   # direction | range | point | qualitative

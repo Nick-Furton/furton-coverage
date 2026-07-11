@@ -36,7 +36,7 @@ calls:
     unit: "{{unit}}"
     basis: "{{gaap|non_gaap}}"
     source_note: "notes/{{TICKER}}/{{YYYY-MM-DD}}_review.md"
-    higher_is_better: true
+    higher_is_better: true    # true for revenue/EPS/ARR/margins; set to false for cost/capex/opex or score.py inverts beat/miss
     call:
       kind: qualitative
       value: "{{thesis statement, falsifiable in plain language}}"

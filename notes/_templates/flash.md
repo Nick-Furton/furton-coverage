@@ -21,7 +21,10 @@ fact_check:
   run_at: null
   notes: ""
 calls:
-  # (a) GRADE the preview's calls: copy each preview call's id/shape, add `actual`.
+  # (a) GRADE the preview's calls: copy each preview call's id/shape VERBATIM, add `actual`.
+  #     Carry EVERY field from the preview call unchanged — id, call_type, source_note,
+  #     higher_is_better, AND confidence. This is the copy that gets extracted to the
+  #     scorecard shard; drop confidence here and the calibration curve loses it forever.
   # (b) Optionally ADD new forward calls (e.g. reaction to updated guidance).
   - id: "{{TICKER}}-{{FY20XXQn}}-preview-{{metric}}"   # same id as the preview call being graded
     ticker: "{{TICKER}}"
@@ -32,7 +35,8 @@ calls:
     unit: "{{unit}}"
     basis: "{{gaap|non_gaap}}"
     source_note: "notes/{{TICKER}}/{{prior date}}_preview.md"
-    higher_is_better: true
+    higher_is_better: true    # true for revenue/EPS/ARR/margins; set to false for cost/capex/opex or score.py inverts beat/miss
+    confidence: 0.0           # copy the SAME value from the preview call (omit only if the preview had none)
     call:
       kind: direction
       value: "{{beat|met|miss}}"

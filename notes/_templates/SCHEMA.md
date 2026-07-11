@@ -86,3 +86,27 @@ Not machine-read — for humans and for the fact-check agents' qualitative-refut
 (which reads the prose adjacent to a `qualitative` call as its context). See
 `preview.md` / `flash.md` / `review.md` in this directory for the expected section
 headers per type.
+
+## Merge Gate 2 addendum (2026-07-11) — resolutions folded in at the gate
+
+Three contract clarifications applied when Session 4 ran Merge Gate 2. They fix cases the
+single CRWD backtest did not exercise but Session 6/7 will hit:
+
+1. **`higher_is_better` is not always `true`.** score.py's `_label` maps above-band →
+   *beat* only for higher-is-better metrics; for a cost/capex/opex line (e.g. AMZN or META
+   capex/expense guidance) coming in *above* the guide is a *miss*, so those records must
+   set `higher_is_better: false` or the scorecard silently inverts. The templates now say
+   so inline.
+2. **Carry `confidence` when a flash/review resolves a preview call.** The resolving note
+   copies the preview call and adds `actual`; that copy is the one extracted to the shard
+   (see `.claude/skills/_shared/note_pipeline.md`). If it drops `confidence`, score.py's
+   calibration curve never sees the call. The flash template now carries a `confidence:`
+   line to copy the preview's value.
+3. **Initiation notes** (`type: initiation`, Session 6/7) use the **same `calls:` shape**
+   as above with `call_type: initiation`, and **no `guidance:` block** (an initiation sets
+   a thesis baseline, it is not graded against a prior quarter's guide). Calls are
+   typically `qualitative` thesis statements, or `point`/`range` estimates on a stated
+   `basis`; `source_note` points at the initiation note. No dedicated `initiation.md`
+   template ships yet — reuse `preview.md`'s frontmatter, drop `guidance:`, set
+   `call_type: initiation`. Everything else (basis, source_note, fact-check gate) is
+   identical.

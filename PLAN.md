@@ -170,7 +170,7 @@ fine, but pick one deliberately and note it in the README.
 
 ---
 
-### ☐ Phase 1 — Foundation ∥ EDGAR data spine
+### ☑ Phase 1 — Foundation ∥ EDGAR data spine   *(Merge Gate 1 closed 2026-07-08; residual: run fewer-permission-prompts)*
 
 **Coordination note:** Session 1 builds the repo skeleton, config schemas, and calendar; Session 2
 builds and validates `edgar.py`, the data spine everything downstream depends on. They meet at
@@ -231,7 +231,7 @@ permission nag is paid eight times.
 
 ---
 
-### ☐ Phase 2 — Deliverable pipeline ∥ Scorecard engine
+### ☑ Phase 2 — Deliverable pipeline ∥ Scorecard engine   *(Merge Gate 2 closed 2026-07-11)*
 
 **Session 3 — Note templates & desk workflow** *(owns: `notes/` templates + one test ticker's notes, `.claude/skills/`, `scripts/build_model.py`)*
 
