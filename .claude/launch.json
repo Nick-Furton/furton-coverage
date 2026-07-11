@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "coverage-site",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8802", "--directory", "docs"],
+      "port": 8802
+    }
+  ]
+}

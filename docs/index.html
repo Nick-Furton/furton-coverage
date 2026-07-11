@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Furton Coverage · An earnings desk that grades its own calls</title>
+<meta name="description" content="Automated earnings coverage on 10 names — previews, same-day flashes, reviews, Excel models, and a public accuracy scorecard — built entirely on free SEC EDGAR data.">
+<meta name="theme-color" content="#070b14">
+<meta property="og:title" content="Furton Coverage · An earnings desk that grades its own calls">
+<meta property="og:description" content="Automated earnings coverage on 10 names — previews, same-day flashes, reviews, Excel models, and a public accuracy scorecard — built entirely on free SEC EDGAR data.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2338e1ff'/%3E%3Crect x='31' y='31' width='38' height='38' rx='6' transform='rotate(45 50 50)' fill='%23070b14'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+
+</head>
+<body>
+
+<nav aria-label="Main">
+  <div class="nav-inner">
+    <a href="index.html" style="display:flex;align-items:center;gap:12px" aria-label="Furton Coverage home">
+      <div class="mark" aria-hidden="true">◆</div>
+      <div class="nav-brand">Furton <span>Coverage</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#universe" aria-current="page">Coverage</a>
+      <a href="research.html" >Research</a>
+      <a href="scorecard.html" >Scorecard</a>
+      <a href="about.html" >Methodology</a>
+      <a href="https://furton.ai" target="_blank" rel="noopener">Furton Research ↗</a>
+    </div>
+    <details class="nav-menu">
+      <summary aria-label="Open navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </summary>
+      <div class="sheet">
+        <a href="index.html#universe">Coverage</a>
+        <a href="research.html">Research</a>
+        <a href="scorecard.html">Scorecard</a>
+        <a href="about.html">Methodology</a>
+        <a href="https://furton.ai" target="_blank" rel="noopener">Furton Research ↗</a>
+      </div>
+    </details>
+  </div>
+</nav>
+<script>
+document.querySelector('.nav-menu .sheet')?.addEventListener('click',e=>{if(e.target.closest('a')){const d=e.target.closest('.nav-menu');if(d)d.open=false}});
+</script>
+
+
+<header class="page-head home">
+  <div class="wrap">
+    <div class="eyebrow">Automated earnings desk · SEC EDGAR sourced · Est. 2026</div>
+    <h1>An earnings desk that <span class="grad">grades its own calls</span> in public.</h1>
+    <p class="hero-sub">10 companies covered on a real research-desk cadence — preview the night before, flash within hours of the print, full review after the filing — built entirely on free, public SEC data. Every call is timestamped, scored against management's own written guidance, and published either way.</p>
+    <div class="hero-cta">
+      <a href="scorecard.html" class="btn btn-primary">See the scorecard <span class="arr">→</span></a>
+      <a href="#universe" class="btn btn-ghost">The coverage universe</a>
+    </div>
+    <p class="asof" style="margin-top:18px">Next print: <b style="color:var(--acc2)">AMZN</b> · Jul 30, 2026 (after market)</p>
+  </div>
+</header>
+
+<section id="stats" class="section-pad" style="padding-top:0">
+  <div class="wrap">
+    <div class="tiles reveal">
+  <div class="tile"><div class="k">Our hit rate <span class="badge">sample data</span></div><div class="v">75%</div><div class="s">8 calls graded · 2 pending</div></div>
+  <div class="tile"><div class="k">Names covered</div><div class="v">10</div><div class="s">AI infrastructure + 2 decorrelators</div></div>
+  <div class="tile"><div class="k">Mgmt guidance record <span class="badge">sample data</span></div><div class="v">2–2–2</div><div class="s">beat–met–missed own guidance</div></div>
+  <div class="tile"><div class="k">Published notes</div><div class="v">3</div><div class="s">previews · flashes · reviews</div></div>
+</div>
+    <div style="margin-top:26px" class="reveal">
+      <p class="asof" style="margin-bottom:12px">Upcoming prints</p>
+      <div class="count-strip" aria-label="Upcoming earnings dates"><div class="count-chip" data-date="2026-07-30">
+  <span class="t">AMZN</span>
+  <span class="d" data-count>Jul 30, 2026</span>
+</div><div class="count-chip" data-date="2026-08-04">
+  <span class="t">AMD</span>
+  <span class="d" data-count>Aug 04, 2026</span>
+</div><div class="count-chip" data-date="2026-08-05">
+  <span class="t">LLY</span>
+  <span class="d" data-count>Aug 05, 2026</span>
+</div><div class="count-chip" data-date="2026-08-20">
+  <span class="t">DE</span>
+  <span class="d" data-count>Aug 20, 2026</span>
+</div><div class="count-chip" data-date="2026-08-24">
+  <span class="t">PANW</span>
+  <span class="d" data-count>Aug 24, 2026</span>
+</div><div class="count-chip" data-date="2026-08-26">
+  <span class="t">NVDA</span>
+  <span class="d" data-count>Aug 26, 2026</span>
+</div><div class="count-chip" data-date="2026-08-26">
+  <span class="t">CRM</span>
+  <span class="d" data-count>Aug 26, 2026</span>
+</div><div class="count-chip" data-date="2026-09-02">
+  <span class="t">CRWD</span>
+  <span class="d" data-count>Sep 02, 2026</span>
+</div><div class="count-chip" data-date="2026-09-03">
+  <span class="t">AVGO</span>
+  <span class="d" data-count>Sep 03, 2026</span>
+</div><div class="count-chip" data-date="2026-09-29">
+  <span class="t">MU</span>
+  <span class="d" data-count>Sep 29, 2026</span>
+</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="universe" class="section-pad light">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>The coverage <em>universe</em></h2>
+      <p class="sec-lead">An AI-infrastructure book — the accelerator supply chain, the software layer on top of it, and the one hyperscaler that writes its guidance down — plus two deliberate decorrelators so the scorecard can't be one lucky sector run. Every name earns its slot the same way: it publishes quantitative forward guidance in its 8-K press release, so every one of our calls is gradable against a public document.</p>
+    </div>
+    <div class="uni-grid"><a class="uni-card reveal" href="tickers/nvda.html">
+  <div class="uni-ticker">NVDA</div>
+  <div class="uni-name">NVIDIA Corporation</div>
+  <div class="uni-sector">Semiconductors (AI accelerators)</div>
+  <div class="uni-next">Next print Aug 26, 2026</div>
+  <span class="uni-arrow">Coverage page →</span>
+</a><a class="uni-card reveal" href="tickers/amd.html">
+  <div class="uni-ticker">AMD</div>
+  <div class="uni-name">Advanced Micro Devices, Inc.</div>
+  <div class="uni-sector">Semiconductors (AI accelerators)</div>
+  <div class="uni-next">Next print Aug 04, 2026</div>
+  <span class="uni-arrow">Coverage page →</span>
+</a><a class="uni-card reveal" href="tickers/avgo.html">
+  <div class="uni-ticker">AVGO</div>
+  <div class="uni-name">Broadcom Inc.</div>
+  <div class="uni-sector">Semiconductors (AI networking / custom silicon)</div>
+  <div class="uni-next">Next print Sep 03, 2026</div>
+  <span class="uni-arrow">Coverage page →</span>
+</a><a class="uni-card reveal" href="tickers/mu.html">
+  <div class="uni-ticker">MU</div>
+  <div class="uni-name">Micron Technology, Inc.</div>
+  <div class="uni-sector">Semiconductors (Memory / HBM)</div>
+  <div class="uni-next">Next print Sep 29, 2026</div>
+  <span class="uni-arrow">Coverage page →</span>
+</a><a class="uni-card reveal" href="tickers/crm.html">
+  <div class="uni-ticker">CRM</div>
+  <div class="uni-name">Salesforce, Inc.</div>
+  <div class="uni-sector">Enterprise Software</div>
+  <div class="uni-next">Next print Aug 26, 2026</div>
+  <span class="uni-arrow">Coverage page →</span>
+</a><a class="uni-card reveal" href="tickers/panw.html">
+  <div class="uni-ticker">PANW</div>
+  <div class="uni-name">Palo Alto Networks, Inc.</div>
+  <div class="uni-sector">Cybersecurity</div>
+  <div class="uni-next">Next print Aug 24, 2026</div>
+  <span class="uni-arrow">Coverage page →</span>
+</a><a class="uni-card reveal" href="tickers/crwd.html">
+  <div class="uni-ticker">CRWD</div>
+  <div class="uni-name">CrowdStrike Holdings, Inc.</div>
+  <div class="uni-sector">Cybersecurity</div>
+  <div class="uni-next">Next print Sep 02, 2026 · 3 notes</div>
+  <span class="uni-arrow">Coverage page →</span>
+</a><a class="uni-card reveal" href="tickers/amzn.html">
+  <div class="uni-ticker">AMZN</div>
+  <div class="uni-name">Amazon.com, Inc.</div>
+  <div class="uni-sector">Hyperscaler / e-commerce</div>
+  <div class="uni-next">Next print Jul 30, 2026</div>
+  <span class="uni-arrow">Coverage page →</span>
+</a><a class="uni-card reveal" href="tickers/lly.html">
+  <div class="uni-ticker">LLY</div>
+  <div class="uni-name">Eli Lilly and Company</div>
+  <div class="uni-sector">Pharmaceuticals (decorrelator)</div>
+  <div class="uni-next">Next print Aug 05, 2026</div>
+  <span class="uni-arrow">Coverage page →</span>
+</a><a class="uni-card reveal" href="tickers/de.html">
+  <div class="uni-ticker">DE</div>
+  <div class="uni-name">Deere &amp; Company</div>
+  <div class="uni-sector">Industrials / Agriculture Machinery (decorrelator)</div>
+  <div class="uni-next">Next print Aug 20, 2026</div>
+  <span class="uni-arrow">Coverage page →</span>
+</a></div>
+    <p class="note">Universe frozen 2026-07-08. Changes require a dated note. 3 names (NVDA, CRM, AMZN) deliberately overlap the <a href="https://furton.ai" style="color:#077ea3">Furton Research</a> Dow 30 screen for cross-project comparison.</p>
+  </div>
+</section>
+
+<section id="latest" class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Latest <em>research</em></h2>
+      <p class="sec-lead">Every note is generated from the primary documents — the 8-K press release and XBRL company facts — and passes an adversarial fact-check gate before it is published.</p>
+    </div>
+    <div class="res-grid"><a class="res-card reveal" href="notes/CRWD/2026-06-05_review.html" data-ticker="CRWD" data-type="review">
+  <div class="res-kind">T+2 Review · CRWD</div>
+  <h4>CRWD Review — FY2027Q1</h4>
+  <p>The 10-Q (filed 2026-06-04, one day after the 8-K) shows total deferred revenue -- current ($3,370.2M) plus noncurrent ($1,352.0M) -- of about $4,722.2M as of April 30, 2026, versus $4,753.4M at the…</p>
+  <div class="res-meta">Published Jun 05, 2026 <span class="badge up">fact-checked</span></div>
+  <span class="res-link">Read the note →</span>
+</a><a class="res-card reveal" href="notes/CRWD/2026-06-03_flash.html" data-ticker="CRWD" data-type="flash">
+  <div class="res-kind">T+0 Flash · CRWD</div>
+  <h4>CRWD Flash — FY2027Q1</h4>
+  <p>Note on the ARR grading: the release discloses ARR only to $5.51 billion (three significant figures), while the guided band was $5,501.8–5,503.8M -- a band narrower than the actual&#x27;s disclosed…</p>
+  <div class="res-meta">Published Jun 03, 2026 <span class="badge up">fact-checked</span></div>
+  <span class="res-link">Read the note →</span>
+</a><a class="res-card reveal" href="notes/CRWD/2026-06-02_preview.html" data-ticker="CRWD" data-type="preview">
+  <div class="res-kind">T−1 Preview · CRWD</div>
+  <h4>CRWD Preview — FY2027Q1</h4>
+  <p>CrowdStrike enters its Q1 FY2027 print off a strong Q4 FY2026: total revenue of $1.31 billion (+23% YoY), ending ARR of $5.25 billion (+24% YoY), and the largest net-new ARR quarter reported in the…</p>
+  <div class="res-meta">Published Jun 02, 2026 <span class="badge up">fact-checked</span></div>
+  <span class="res-link">Read the note →</span>
+</a></div>
+    <p style="margin-top:26px"><a class="btn btn-ghost" href="research.html">Full research library <span class="arr">→</span></a></p>
+  </div>
+</section>
+<section id="how" class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>How the desk <em>works</em></h2>
+    </div>
+    <div class="grid2">
+      <div class="card reveal"><h3>T−1 · Preview</h3><p class="note" style="margin-top:0">The night before a print: the guidance table from the prior quarter's 8-K, our falsifiable calls against it, and what actually matters going in.</p></div>
+      <div class="card reveal"><h3>T+0 · Flash</h3><p class="note" style="margin-top:0">Within hours of the earnings 8-K hitting EDGAR: headline actuals versus our calls, guidance changes, and a first-read verdict. Preview calls get graded the same day.</p></div>
+      <div class="card reveal"><h3>T+2 · Review</h3><p class="note" style="margin-top:0">Once the 10-Q lands: full synthesis with XBRL detail, an updated Excel model, and the thesis update — the deepest of the three notes.</p></div>
+      <div class="card reveal"><h3>The scorecard</h3><p class="note" style="margin-top:0">score.py grades every numeric call deterministically — no model grades its own work — and management's guidance accuracy is tracked with the same rigor. Misses stay published.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Furton <span class="grad">Coverage</span></div>
+        <p class="foot-tagline">An automated earnings-coverage desk on ten names — pre-earnings previews, same-day flashes, full reviews, and a public accuracy scorecard — built entirely on free, public SEC EDGAR data.</p>
+        <p class="foot-author">Nick Furton · Ross School of Business, University of Michigan<br><a href="mailto:nicholas@furton.com">nicholas@furton.com</a> · <a href="https://www.linkedin.com/in/nick-furton-6b8090420/" target="_blank" rel="noopener">LinkedIn</a></p>
+      </div>
+      <div class="foot-col">
+        <h5>Explore</h5>
+        <a href="index.html#universe">Coverage universe</a>
+        <a href="research.html">Research library</a>
+        <a href="scorecard.html">Accuracy scorecard</a>
+        <a href="about.html">Methodology</a>
+      </div>
+      <div class="foot-col">
+        <h5>Family</h5>
+        <a href="https://furton.ai" target="_blank" rel="noopener">Furton Research</a>
+        <a href="https://nick-furton.github.io/form-d-radar/" target="_blank" rel="noopener">Form D Radar</a>
+        <a href="https://github.com/Nick-Furton/furton-coverage" target="_blank" rel="noopener">Code on GitHub</a>
+      </div>
+    </div>
+    <div class="foot-disclaimer">
+      Furton Coverage is an educational research project, not investment advice. All financial figures are sourced from public SEC EDGAR filings (XBRL company facts and 8-K press releases) and every published call is timestamped and graded against management's own written guidance — misses included. Nothing here is a recommendation or an offer to buy or sell any security. Generated 2026-07-11 23:20 UTC by scripts/build_site.py. © 2026 Furton Coverage.
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return}
+  const io=new IntersectionObserver(en=>en.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.08});
+  els.forEach(e=>io.observe(e));
+})();
+</script>
+
+<script>
+(function(){
+  const now = new Date(); now.setHours(0,0,0,0);
+  document.querySelectorAll('.count-chip').forEach(ch=>{
+    // earnings dates are US-market events: anchor to ET (fixed -05:00; the DST
+    // hour of slop can't flip a Math.round day count) instead of viewer-local
+    const d = new Date(ch.dataset.date + 'T00:00:00-05:00');
+    const days = Math.round((d - now) / 86400000);
+    const el = ch.querySelector('[data-count]');
+    const date = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    if (days > 1) el.innerHTML = date + ' \u00b7 in <b>' + days + ' days</b>';
+    else if (days === 1) el.innerHTML = date + ' \u00b7 <b>tomorrow</b>';
+    else if (days === 0) el.innerHTML = date + ' \u00b7 <b>today</b>';
+    else el.innerHTML = date + ' \u00b7 printed';
+    if (days >= 0 && days <= 7) ch.classList.add('soon');
+  });
+})();
+</script>
+</body>
+</html>

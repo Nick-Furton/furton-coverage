@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scorecard · Furton Coverage</title>
+<meta name="description" content="The public accuracy scorecard: our hit rate by note type and metric, management&#x27;s record against its own guidance, and our calibration curve.">
+<meta name="theme-color" content="#070b14">
+<meta property="og:title" content="Scorecard · Furton Coverage">
+<meta property="og:description" content="The public accuracy scorecard: our hit rate by note type and metric, management&#x27;s record against its own guidance, and our calibration curve.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2338e1ff'/%3E%3Crect x='31' y='31' width='38' height='38' rx='6' transform='rotate(45 50 50)' fill='%23070b14'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+
+</head>
+<body>
+
+<nav aria-label="Main">
+  <div class="nav-inner">
+    <a href="index.html" style="display:flex;align-items:center;gap:12px" aria-label="Furton Coverage home">
+      <div class="mark" aria-hidden="true">◆</div>
+      <div class="nav-brand">Furton <span>Coverage</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#universe" >Coverage</a>
+      <a href="research.html" >Research</a>
+      <a href="scorecard.html" aria-current="page">Scorecard</a>
+      <a href="about.html" >Methodology</a>
+      <a href="https://furton.ai" target="_blank" rel="noopener">Furton Research ↗</a>
+    </div>
+    <details class="nav-menu">
+      <summary aria-label="Open navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </summary>
+      <div class="sheet">
+        <a href="index.html#universe">Coverage</a>
+        <a href="research.html">Research</a>
+        <a href="scorecard.html">Scorecard</a>
+        <a href="about.html">Methodology</a>
+        <a href="https://furton.ai" target="_blank" rel="noopener">Furton Research ↗</a>
+      </div>
+    </details>
+  </div>
+</nav>
+<script>
+document.querySelector('.nav-menu .sheet')?.addEventListener('click',e=>{if(e.target.closest('a')){const d=e.target.closest('.nav-menu');if(d)d.open=false}});
+</script>
+
+
+<header class="page-head">
+  <div class="wrap">
+    <div class="eyebrow">Accuracy scorecard</div>
+    <h1>The calls, <span class="grad">graded in code</span>.</h1>
+    <p class="hero-sub">Numeric calls are graded deterministically by <code style="font-family:var(--mono);font-size:.9em">score.py</code> against management's own written guidance — no model grades its own work. Management's accuracy against its own guidance is tracked with the same rigor. Misses stay on the board.</p>
+    <p class="asof" style="margin-top:16px">Generated Jul 09, 2026 · scorecard/summary.json</p>
+  </div>
+</header>
+<section class="section-pad" style="padding-top:24px">
+  <div class="wrap">
+    <div class="dummy-banner reveal" role="note"><span aria-hidden="true">⚠</span><div><b>Sample data.</b> The scorecard is currently seeded with schema-validation dummy records so the pipeline can be exercised end-to-end. They are flagged in the store, excluded from any real claims, and will be deleted when the first real coverage cycle publishes (Merge Gate 3).</div></div>
+    <div class="tiles reveal">
+  <div class="tile"><div class="k">Overall hit rate</div><div class="v">75%</div><div class="s">6 of 8 graded calls</div></div>
+  <div class="tile"><div class="k">Calls pending</div><div class="v">2</div><div class="s">graded when the print lands</div></div>
+  <div class="tile"><div class="k">Mgmt vs own guidance</div><div class="v">2–2–2</div><div class="s">beat–met–missed · 6 graded</div></div>
+  <div class="tile"><div class="k">Records tracked</div><div class="v">11 + 8</div><div class="s">our calls + guidance entries</div></div>
+</div>
+    <div class="grid2" style="margin-top:26px">
+      <div class="card reveal">
+        <h3>Our hit rate by note type <small>graded calls only</small></h3>
+        <div class="chartbox"><canvas id="chType" role="img" aria-label="Bar chart of our hit rate by note type">Chart unavailable — the per-ticker table below carries the data.</canvas></div>
+        <p class="note">Share of graded calls that landed, split by the note that made them. Bar labels carry the sample size — early on these are small.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Our hit rate by metric <small>graded calls only</small></h3>
+        <div class="chartbox"><canvas id="chMetric" role="img" aria-label="Horizontal bar chart of our hit rate by metric">Chart unavailable — the per-ticker table below carries the data.</canvas></div>
+        <p class="note">Which lines we read well — and which we don't. A 0% bar is a published miss, left visible on purpose.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Management vs. its own guidance <small>by ticker</small></h3>
+        <div class="chartbox"><canvas id="chGuide" role="img" aria-label="Stacked bar chart of management guidance outcomes by ticker">Chart unavailable — the per-ticker table below carries the data.</canvas></div>
+        <p class="note">Did the company beat, meet, or miss the guidance it published in its own prior 8-K? This is the desk's benchmark — and a dataset in its own right.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Calibration <small>confidence vs. outcome</small></h3>
+        <div class="chartbox"><canvas id="chCalib" role="img" aria-label="Scatter chart of stated confidence versus empirical hit rate">Chart unavailable — the per-ticker table below carries the data.</canvas></div>
+        <p class="note">Each point is a confidence decile: stated confidence (x) against the share of those calls that actually hit (y). Points on the dashed line mean we're exactly as confident as we should be.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section-pad light" style="padding-top:64px;padding-bottom:64px">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Per-ticker <em>detail</em></h2></div>
+    <div class="card reveal"><div class="tscroll"><table>
+<caption class="small" style="text-align:left;padding-bottom:10px">Per-ticker detail — the table view of every chart above.</caption>
+<thead><tr><th>Ticker</th><th>Graded</th><th>Hits</th><th>Hit rate</th><th>Pending</th><th>Guid. beat</th><th>Guid. met</th><th>Guid. missed</th></tr></thead>
+<tbody><tr><td><a href='tickers/amd.html' style='color:inherit'>AMD</a></td><td>2</td><td>1</td><td>50%</td><td>0</td><td>0</td><td>0</td><td>1</td></tr><tr><td><a href='tickers/amzn.html' style='color:inherit'>AMZN</a></td><td>2</td><td>1</td><td>50%</td><td>1</td><td>0</td><td>1</td><td>1</td></tr><tr><td><a href='tickers/crwd.html' style='color:inherit'>CRWD</a></td><td>1</td><td>1</td><td>100%</td><td>1</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href='tickers/de.html' style='color:inherit'>DE</a></td><td>1</td><td>1</td><td>100%</td><td>0</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href='tickers/nvda.html' style='color:inherit'>NVDA</a></td><td>2</td><td>2</td><td>100%</td><td>0</td><td>1</td><td>0</td><td>0</td></tr></tbody></table></div></div>
+    <p class="note">Pending calls are excluded from hit-rate denominators until the print lands. Every record carries its GAAP/non-GAAP basis and the grader refuses to compare across bases.</p>
+  </div>
+</section>
+
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Furton <span class="grad">Coverage</span></div>
+        <p class="foot-tagline">An automated earnings-coverage desk on ten names — pre-earnings previews, same-day flashes, full reviews, and a public accuracy scorecard — built entirely on free, public SEC EDGAR data.</p>
+        <p class="foot-author">Nick Furton · Ross School of Business, University of Michigan<br><a href="mailto:nicholas@furton.com">nicholas@furton.com</a> · <a href="https://www.linkedin.com/in/nick-furton-6b8090420/" target="_blank" rel="noopener">LinkedIn</a></p>
+      </div>
+      <div class="foot-col">
+        <h5>Explore</h5>
+        <a href="index.html#universe">Coverage universe</a>
+        <a href="research.html">Research library</a>
+        <a href="scorecard.html">Accuracy scorecard</a>
+        <a href="about.html">Methodology</a>
+      </div>
+      <div class="foot-col">
+        <h5>Family</h5>
+        <a href="https://furton.ai" target="_blank" rel="noopener">Furton Research</a>
+        <a href="https://nick-furton.github.io/form-d-radar/" target="_blank" rel="noopener">Form D Radar</a>
+        <a href="https://github.com/Nick-Furton/furton-coverage" target="_blank" rel="noopener">Code on GitHub</a>
+      </div>
+    </div>
+    <div class="foot-disclaimer">
+      Furton Coverage is an educational research project, not investment advice. All financial figures are sourced from public SEC EDGAR filings (XBRL company facts and 8-K press releases) and every published call is timestamped and graded against management's own written guidance — misses included. Nothing here is a recommendation or an offer to buy or sell any security. Generated 2026-07-11 23:20 UTC by scripts/build_site.py. © 2026 Furton Coverage.
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return}
+  const io=new IntersectionObserver(en=>en.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.08});
+  els.forEach(e=>io.observe(e));
+})();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" integrity="sha384-JUh163oCRItcbPme8pYnROHQMC6fNKTBWtRG3I3I0erJkzNgL7uxKlNwcrcFKeqF" crossorigin="anonymous"></script>
+<script>
+(function(){
+  if (typeof Chart === 'undefined') return;  // offline: tables still carry the data
+  const MONO = "'JetBrains Mono', monospace";
+  Chart.defaults.color = '#7d879e';
+  Chart.defaults.font.family = MONO;
+  Chart.defaults.font.size = 10.5;
+  Chart.defaults.borderColor = 'rgba(255,255,255,.05)';
+  const GRID = {color:'rgba(255,255,255,.05)'};
+  const TT = {backgroundColor:'rgba(10,14,26,.96)',borderColor:'rgba(255,255,255,.12)',borderWidth:1,titleFont:{family:MONO},bodyFont:{family:MONO},padding:10,cornerRadius:8};
+  const pctAxis = {beginAtZero:true,max:100,grid:GRID,ticks:{callback:v=>v+'%'}};
+
+  const ct = {"labels": ["T\u22121 Preview", "T+0 Flash", "T+2 Review"], "rates": [75.0, 66.7, 100.0], "n": [4, 3, 1]};
+  new Chart(document.getElementById('chType'), {
+    type:'bar',
+    data:{labels:ct.labels,datasets:[{data:ct.rates,backgroundColor:'#6d7cff',borderRadius:4,borderSkipped:'bottom',maxBarThickness:34}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.parsed.y+'% hit rate \u00b7 n='+ct.n[c.dataIndex]}}},scales:{y:pctAxis,x:{grid:{display:false}}}}
+  });
+
+  const bm = {"labels": ["aws revenue", "ending arr", "net income", "revenue", "gross margin", "net sales"], "rates": [100.0, 100.0, 100.0, 100.0, 50.0, 0.0], "n": [1, 1, 1, 2, 2, 1]};
+  new Chart(document.getElementById('chMetric'), {
+    type:'bar',
+    data:{labels:bm.labels,datasets:[{data:bm.rates,backgroundColor:'#6d7cff',borderRadius:4,borderSkipped:'left',maxBarThickness:18}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.parsed.x+'% hit rate \u00b7 n='+bm.n[c.dataIndex]}}},scales:{x:pctAxis,y:{grid:{display:false}}}}
+  });
+
+  const gt = {"labels": ["AMD", "AMZN", "CRWD", "DE", "NVDA"], "beat": [0, 0, 1, 0, 1], "met": [0, 1, 0, 1, 0], "missed": [1, 1, 0, 0, 0]};
+  const seg = {borderColor:'#0d1322',borderWidth:2,borderRadius:4,maxBarThickness:26};
+  new Chart(document.getElementById('chGuide'), {
+    type:'bar',
+    data:{labels:gt.labels,datasets:[
+      {label:'Beat',data:gt.beat,backgroundColor:'#1fa06b',...seg},
+      {label:'Met',data:gt.met,backgroundColor:'#6d7cff',...seg},
+      {label:'Missed',data:gt.missed,backgroundColor:'#e04358',...seg}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10,borderRadius:2,useBorderRadius:true,padding:16}},tooltip:TT},
+      scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,grid:GRID,ticks:{precision:0}}}}
+  });
+
+  const calib = [{"x": 55.0, "y": 100.0, "n": 1}, {"x": 62.0, "y": 60.0, "n": 5}, {"x": 70.0, "y": 100.0, "n": 1}, {"x": 80.0, "y": 100.0, "n": 1}];
+  new Chart(document.getElementById('chCalib'), {
+    type:'scatter',
+    data:{datasets:[
+      {label:'Perfect calibration',data:[{x:0,y:0},{x:100,y:100}],type:'line',borderColor:'rgba(139,147,167,.45)',borderDash:[5,5],borderWidth:1.5,pointRadius:0,order:2},
+      {label:'Confidence deciles',data:calib,backgroundColor:'#6d7cff',pointRadius:6,pointHoverRadius:8,order:1}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{...TT,filter:i=>i.dataset.type!=='line',callbacks:{label:c=>'stated '+c.parsed.x+'% \u2192 hit '+c.parsed.y+'% (n='+calib[c.dataIndex].n+')'}}},
+      scales:{x:{...pctAxis,title:{display:true,text:'stated confidence'}},y:{...pctAxis,title:{display:true,text:'empirical hit rate'}}}}
+  });
+})();
+</script>
+</body>
+</html>
