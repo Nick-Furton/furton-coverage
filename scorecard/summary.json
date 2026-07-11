@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-07-11T23:42:38+00:00",
+  "generated_at": "2026-07-11T23:49:16+00:00",
   "totals": {
-    "call_records": 13,
+    "call_records": 17,
     "guidance_records": 8,
     "calls_graded": 6,
-    "calls_pending": 4,
-    "calls_qualitative": 3,
+    "calls_pending": 6,
+    "calls_qualitative": 5,
     "guidance_graded": 6,
     "guidance_pending": 2,
-    "tickers": 5
+    "tickers": 6
   },
   "our_calls": {
     "overall": {
       "n_graded": 6,
       "hits": 5,
       "hit_rate": 0.8333,
-      "pending": 4,
-      "qualitative": 3
+      "pending": 6,
+      "qualitative": 5
     },
     "by_call_type": {
       "flash": {
@@ -30,8 +30,8 @@
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
-        "pending": 2,
-        "qualitative": 2
+        "pending": 4,
+        "qualitative": 4
       },
       "preview": {
         "n_graded": 3,
@@ -98,6 +98,13 @@
         "pending": 0,
         "qualitative": 1
       },
+      "infrastructure_software_margin_qualitative": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 0,
+        "qualitative": 1
+      },
       "net_income": {
         "n_graded": 1,
         "hits": 1,
@@ -119,6 +126,13 @@
         "pending": 1,
         "qualitative": 0
       },
+      "non_gaap_operating_margin": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 1,
+        "qualitative": 0
+      },
       "operating_income": {
         "n_graded": 0,
         "hits": 0,
@@ -130,8 +144,15 @@
         "n_graded": 1,
         "hits": 1,
         "hit_rate": 1.0,
-        "pending": 1,
+        "pending": 2,
         "qualitative": 0
+      },
+      "semiconductor_ai_revenue_qualitative": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 0,
+        "qualitative": 1
       }
     },
     "over_time": {
@@ -140,7 +161,7 @@
         "hits": 1,
         "hit_rate": 1.0,
         "pending": 0,
-        "qualitative": 2
+        "qualitative": 4
       },
       "FY2026Q2": {
         "n_graded": 0,
@@ -153,7 +174,7 @@
         "n_graded": 2,
         "hits": 1,
         "hit_rate": 0.5,
-        "pending": 0,
+        "pending": 2,
         "qualitative": 0
       },
       "FY2026Q4": {
@@ -386,6 +407,22 @@
         "met": 1,
         "missed": 1,
         "pending": 1
+      }
+    },
+    "AVGO": {
+      "our_calls": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 2,
+        "qualitative": 2
+      },
+      "guidance": {
+        "n_graded": 0,
+        "beat": 0,
+        "met": 0,
+        "missed": 0,
+        "pending": 0
       }
     },
     "CRWD": {
