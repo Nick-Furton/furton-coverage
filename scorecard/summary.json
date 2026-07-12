@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-07-11T23:58:15+00:00",
+  "generated_at": "2026-07-11T23:59:57+00:00",
   "totals": {
-    "call_records": 22,
+    "call_records": 26,
     "guidance_records": 8,
     "calls_graded": 4,
-    "calls_pending": 9,
-    "calls_qualitative": 9,
+    "calls_pending": 11,
+    "calls_qualitative": 11,
     "guidance_graded": 6,
     "guidance_pending": 2,
-    "tickers": 6
+    "tickers": 7
   },
   "our_calls": {
     "overall": {
       "n_graded": 4,
       "hits": 4,
       "hit_rate": 1.0,
-      "pending": 9,
-      "qualitative": 9
+      "pending": 11,
+      "qualitative": 11
     },
     "by_call_type": {
       "flash": {
@@ -30,8 +30,8 @@
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
-        "pending": 8,
-        "qualitative": 8
+        "pending": 10,
+        "qualitative": 10
       },
       "preview": {
         "n_graded": 2,
@@ -49,6 +49,20 @@
       }
     },
     "by_metric": {
+      "agentforce_adoption_qualitative": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 0,
+        "qualitative": 1
+      },
+      "attrition_rate_qualitative": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 0,
+        "qualitative": 1
+      },
       "aws_operating_margin_qualitative": {
         "n_graded": 0,
         "hits": 0,
@@ -90,6 +104,13 @@
         "hit_rate": null,
         "pending": 0,
         "qualitative": 1
+      },
+      "gaap_operating_margin": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 1,
+        "qualitative": 0
       },
       "gross_margin": {
         "n_graded": 1,
@@ -165,7 +186,7 @@
         "n_graded": 1,
         "hits": 1,
         "hit_rate": 1.0,
-        "pending": 3,
+        "pending": 4,
         "qualitative": 0
       },
       "semiconductor_ai_revenue_qualitative": {
@@ -202,8 +223,8 @@
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
-        "pending": 0,
-        "qualitative": 2
+        "pending": 1,
+        "qualitative": 4
       },
       "FY2027Q1": {
         "n_graded": 2,
@@ -216,7 +237,7 @@
         "n_graded": 1,
         "hits": 1,
         "hit_rate": 1.0,
-        "pending": 2,
+        "pending": 3,
         "qualitative": 0
       },
       "FY2027Q3": {
@@ -431,6 +452,22 @@
       }
     },
     "AVGO": {
+      "our_calls": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 2,
+        "qualitative": 2
+      },
+      "guidance": {
+        "n_graded": 0,
+        "beat": 0,
+        "met": 0,
+        "missed": 0,
+        "pending": 0
+      }
+    },
+    "CRM": {
       "our_calls": {
         "n_graded": 0,
         "hits": 0,
