@@ -328,3 +328,69 @@ follow. Chart.js is SRI-pinned to 4.4.3 — bumping the CDN version requires rec
 in CHARTJS_SRI. Site preview: launch config "coverage-site" (port 8802) in THIS repo's
 .claude/launch.json (a duplicate entry also sits in Furton Research's gitignored launch.json
 because preview tools read the primary session dir).
+
+## [S6] Initiations batch 1 (AMD/AMZN/AVGO/CRM/CRWD) — 2026-07-11
+
+**Did:** Initiated the first 5 tickers alphabetically from the frozen 10
+(`notes/<TICKER>/2026-07-11_initiation.md`, `models/<TICKER>/<TICKER>_model_2026-07-11.xlsx`,
+`scorecard/calls/<TICKER>.jsonl`), each sourced from that ticker's latest 10-K (business/
+segment narrative + MD&A) plus its most recent earnings 8-K (EX-99.1, for current-quarter
+actuals and next-quarter/full-year guidance) via `edgar.py`. Each note carries 2 forward
+numeric calls (graded against the company's own next-print guidance) + 2 forward
+qualitative theses, all `call_type: initiation`. Ran the full adversarial fact-check
+Workflow gate on every note (per `notes/_templates/SCHEMA.md` §"PUBLISH GATE") — **it
+earned its keep**: across the 5 notes it caught a real factual reversal (an AMD call said
+Data Center "sustains growth meaningfully above" Client & Gaming when C&G actually grew
+faster in FY2025, 51% vs. 32%), a margin-direction error (an AMZN call framed AWS margin
+as "continues to expand" when the segment table shows it contracted 37.0%→35.4%), an
+annual-vs-quarterly trend confusion (a CRWD call claimed the GAAP operating loss was
+"continuing to narrow" citing only a Q1-over-Q1 comparison, when full-year losses actually
+widened every year through FY2026), and a self-inflicted data-deletion (a CRM correction
+round wrongly removed a real, verified $2.2B Informatica-RPO figure after a false-negative
+fact-check pass claimed it didn't exist — restored after directly re-reading the cached
+filing text). All were corrected and re-verified; CRM's attrition-rate thesis is published
+flagged `verification: unverified` after being refuted twice on purely structural grounds
+(an inherently unconfirmable forward bet against the filing's own risk-factor hedging) —
+see note_pipeline.md's guidance on directionally-reasonable claims the gate can't settle.
+Committed + pushed as 5 separate `[S6]` commits (one per ticker, immediately after each
+passed its gate) so S5's site build could pick up real data incrementally. Cleaned up
+~30 stray scratch/debris files (`amd10k.htm`, `scratch_*.htm/.txt`, `search*.py`, etc.)
+left in the repo root by the Workflow gate's WebFetch-using subagents before each commit —
+did not touch `CLAUDE.md` (modified, uncommitted) or `.claude/settings.json` (untracked),
+both belonging to a concurrent session.
+
+**Unfinished / for the gate:** CRWD already had a preview/flash/review backtest series
+(S3, same Q1 FY2027 print) — this initiation note is deliberately broader/forward-looking
+(FY2027 as a whole, not that one quarter) with non-overlapping call ids; Merge Gate 3
+reviewers should sanity-check the two note types read as complementary, not redundant, on
+the built site. `scorecard/calls/CRWD.jsonl` was **appended to** (not overwritten) since
+S4's dummy CRWD rows already lived there — verify `score.py`'s duplicate-id guard stays
+green after Gate 3 deletes the dummies (it does; ids don't collide).
+
+**Next session (S7 + Merge Gate 3) must know:**
+- **Recurring infra quirk, confirmed again this session:** WebFetch-based verifier agents
+  in the fact-check Workflow occasionally return content from a DIFFERENT document than
+  the cited URL (e.g. an AMZN net-income claim initially "failed" because the fetch
+  returned a TTM-through-Q1-2026 rendering instead of the FY2025 10-K; a CRM RPO figure
+  first came back "not in the filing," then a later independent re-check found it verbatim
+  in the same URL). Same failure mode S3 flagged at the CRWD backtest. **Before cutting
+  content off a failed verdict, grep your own cached raw text (or re-run that one claim in
+  isolation) — don't trust a lone fail whose evidence_quote doesn't match the cited
+  document's actual dateline/content.**
+- **`--kpi-overrides` was NOT used this session** — all 5 initiation notes rely on
+  companyfacts headline financials (via `build_model.py`) plus 10-K/8-K-cited prose for
+  segment/KPI detail (Data Center, AWS, Semiconductor Solutions, cRPO, ARR — none of which
+  are in companyfacts). S7 should follow the same pattern for the guidance backfill unless
+  it needs the KPI override mechanism for a specific extracted press-release figure.
+- **Model quirks documented per-ticker, not fixed:** AMZN's `GrossProfit` XBRL tag has no
+  post-2009 data (blank row, by design); AVGO's FY2024 EPS/GrossProfit/OperatingIncomeLoss
+  disagree pre/post its 2024 stock split (model keeps earliest-filed, i.e. pre-split);
+  CRWD's Q1-FY2026 figures disagree slightly between two later filings (model keeps
+  earliest-filed). None of these are new build_model.py bugs — they're the documented
+  anchoring-to-earliest-filed behavior surfacing on real names; see
+  `gate2_build_model_followups.md` for the *actual* deferred defects if S7/S8 pick those up.
+- **`py scripts/score.py` run after each ticker** — summary.json now reflects real batch-1
+  data (26 calls / 8 guidance across 7 tickers as of this handoff, dummy CRWD rows still
+  included per plan; Gate 3 deletes them).
+- Universe order used (alphabetical, frozen 10): AMD, AMZN, AVGO, CRM, CRWD done this
+  session; **S7 owns DE, LLY, MU, NVDA, PANW** for batch 2, plus the guidance backfill.
