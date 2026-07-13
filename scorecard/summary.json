@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-07-13T22:00:14+00:00",
+  "generated_at": "2026-07-13T22:07:10+00:00",
   "totals": {
     "call_records": 46,
-    "guidance_records": 20,
+    "guidance_records": 74,
     "calls_graded": 4,
     "calls_pending": 21,
     "calls_qualitative": 21,
-    "guidance_graded": 19,
-    "guidance_pending": 1,
+    "guidance_graded": 71,
+    "guidance_pending": 3,
     "tickers": 10
   },
   "our_calls": {
@@ -428,18 +428,18 @@
   },
   "guidance_accuracy": {
     "overall": {
-      "n_graded": 19,
-      "beat": 12,
-      "met": 6,
-      "missed": 1,
-      "pending": 1
+      "n_graded": 71,
+      "beat": 59,
+      "met": 12,
+      "missed": 0,
+      "pending": 3
     },
     "by_ticker": {
       "AMD": {
-        "n_graded": 1,
-        "beat": 0,
-        "met": 0,
-        "missed": 1,
+        "n_graded": 8,
+        "beat": 4,
+        "met": 4,
+        "missed": 0,
         "pending": 0
       },
       "AMZN": {
@@ -449,9 +449,23 @@
         "missed": 0,
         "pending": 0
       },
+      "AVGO": {
+        "n_graded": 8,
+        "beat": 8,
+        "met": 0,
+        "missed": 0,
+        "pending": 0
+      },
+      "CRM": {
+        "n_graded": 8,
+        "beat": 6,
+        "met": 2,
+        "missed": 0,
+        "pending": 0
+      },
       "CRWD": {
-        "n_graded": 1,
-        "beat": 1,
+        "n_graded": 8,
+        "beat": 8,
         "met": 0,
         "missed": 0,
         "pending": 0
@@ -463,39 +477,60 @@
         "missed": 0,
         "pending": 1
       },
+      "LLY": {
+        "n_graded": 2,
+        "beat": 2,
+        "met": 0,
+        "missed": 0,
+        "pending": 2
+      },
+      "MU": {
+        "n_graded": 12,
+        "beat": 12,
+        "met": 0,
+        "missed": 0,
+        "pending": 0
+      },
       "NVDA": {
         "n_graded": 8,
         "beat": 5,
         "met": 3,
         "missed": 0,
         "pending": 0
+      },
+      "PANW": {
+        "n_graded": 8,
+        "beat": 8,
+        "met": 0,
+        "missed": 0,
+        "pending": 0
       }
     },
     "over_time": {
       "FY2025": {
-        "n_graded": 1,
-        "beat": 0,
+        "n_graded": 3,
+        "beat": 2,
         "met": 1,
         "missed": 0,
         "pending": 0
       },
       "FY2025Q2": {
-        "n_graded": 2,
+        "n_graded": 4,
         "beat": 2,
-        "met": 0,
+        "met": 2,
         "missed": 0,
         "pending": 0
       },
       "FY2025Q3": {
-        "n_graded": 2,
-        "beat": 1,
-        "met": 1,
+        "n_graded": 6,
+        "beat": 4,
+        "met": 2,
         "missed": 0,
         "pending": 0
       },
       "FY2025Q4": {
-        "n_graded": 2,
-        "beat": 1,
+        "n_graded": 11,
+        "beat": 10,
         "met": 1,
         "missed": 0,
         "pending": 0
@@ -505,47 +540,40 @@
         "beat": 0,
         "met": 0,
         "missed": 0,
-        "pending": 1
+        "pending": 3
       },
       "FY2026Q1": {
-        "n_graded": 2,
-        "beat": 2,
-        "met": 0,
+        "n_graded": 11,
+        "beat": 10,
+        "met": 1,
         "missed": 0,
         "pending": 0
       },
       "FY2026Q2": {
-        "n_graded": 2,
-        "beat": 2,
+        "n_graded": 13,
+        "beat": 13,
         "met": 0,
         "missed": 0,
         "pending": 0
       },
       "FY2026Q3": {
-        "n_graded": 3,
-        "beat": 1,
-        "met": 1,
-        "missed": 1,
+        "n_graded": 11,
+        "beat": 9,
+        "met": 2,
+        "missed": 0,
         "pending": 0
       },
       "FY2026Q4": {
-        "n_graded": 2,
-        "beat": 1,
-        "met": 1,
+        "n_graded": 6,
+        "beat": 4,
+        "met": 2,
         "missed": 0,
         "pending": 0
       },
       "FY2027Q1": {
-        "n_graded": 2,
-        "beat": 1,
+        "n_graded": 6,
+        "beat": 5,
         "met": 1,
-        "missed": 0,
-        "pending": 0
-      },
-      "FY2027Q2": {
-        "n_graded": 1,
-        "beat": 1,
-        "met": 0,
         "missed": 0,
         "pending": 0
       }
@@ -561,10 +589,10 @@
         "qualitative": 2
       },
       "guidance": {
-        "n_graded": 1,
-        "beat": 0,
-        "met": 0,
-        "missed": 1,
+        "n_graded": 8,
+        "beat": 4,
+        "met": 4,
+        "missed": 0,
         "pending": 0
       }
     },
@@ -593,8 +621,8 @@
         "qualitative": 2
       },
       "guidance": {
-        "n_graded": 0,
-        "beat": 0,
+        "n_graded": 8,
+        "beat": 8,
         "met": 0,
         "missed": 0,
         "pending": 0
@@ -609,9 +637,9 @@
         "qualitative": 2
       },
       "guidance": {
-        "n_graded": 0,
-        "beat": 0,
-        "met": 0,
+        "n_graded": 8,
+        "beat": 6,
+        "met": 2,
         "missed": 0,
         "pending": 0
       }
@@ -625,8 +653,8 @@
         "qualitative": 2
       },
       "guidance": {
-        "n_graded": 1,
-        "beat": 1,
+        "n_graded": 8,
+        "beat": 8,
         "met": 0,
         "missed": 0,
         "pending": 0
@@ -657,11 +685,11 @@
         "qualitative": 2
       },
       "guidance": {
-        "n_graded": 0,
-        "beat": 0,
+        "n_graded": 2,
+        "beat": 2,
         "met": 0,
         "missed": 0,
-        "pending": 0
+        "pending": 2
       }
     },
     "MU": {
@@ -673,8 +701,8 @@
         "qualitative": 2
       },
       "guidance": {
-        "n_graded": 0,
-        "beat": 0,
+        "n_graded": 12,
+        "beat": 12,
         "met": 0,
         "missed": 0,
         "pending": 0
@@ -705,8 +733,8 @@
         "qualitative": 2
       },
       "guidance": {
-        "n_graded": 0,
-        "beat": 0,
+        "n_graded": 8,
+        "beat": 8,
         "met": 0,
         "missed": 0,
         "pending": 0
@@ -716,7 +744,7 @@
   "dummy": {
     "included": true,
     "call_records": 6,
-    "guidance_records": 2
+    "guidance_records": 0
   },
   "warnings": []
 }
