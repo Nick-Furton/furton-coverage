@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-07-13T21:28:25+00:00",
+  "generated_at": "2026-07-13T21:35:38+00:00",
   "totals": {
-    "call_records": 34,
+    "call_records": 38,
     "guidance_records": 8,
     "calls_graded": 4,
-    "calls_pending": 15,
-    "calls_qualitative": 15,
+    "calls_pending": 17,
+    "calls_qualitative": 17,
     "guidance_graded": 6,
     "guidance_pending": 2,
-    "tickers": 7
+    "tickers": 8
   },
   "our_calls": {
     "overall": {
       "n_graded": 4,
       "hits": 4,
       "hit_rate": 1.0,
-      "pending": 15,
-      "qualitative": 15
+      "pending": 17,
+      "qualitative": 17
     },
     "by_call_type": {
       "flash": {
@@ -30,8 +30,8 @@
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
-        "pending": 14,
-        "qualitative": 14
+        "pending": 16,
+        "qualitative": 16
       },
       "preview": {
         "n_graded": 2,
@@ -123,7 +123,7 @@
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
-        "pending": 2,
+        "pending": 3,
         "qualitative": 0
       },
       "gaap_operating_income_qualitative": {
@@ -148,6 +148,13 @@
         "qualitative": 0
       },
       "gross_margin_trajectory_qualitative": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 0,
+        "qualitative": 1
+      },
+      "incretin_franchise_growth_qualitative": {
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
@@ -210,11 +217,18 @@
         "pending": 0,
         "qualitative": 1
       },
+      "oral_incretin_pipeline_qualitative": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 0,
+        "qualitative": 1
+      },
       "revenue": {
         "n_graded": 1,
         "hits": 1,
         "hit_rate": 1.0,
-        "pending": 5,
+        "pending": 6,
         "qualitative": 0
       },
       "semiconductor_ai_revenue_qualitative": {
@@ -237,8 +251,8 @@
         "n_graded": 1,
         "hits": 1,
         "hit_rate": 1.0,
-        "pending": 2,
-        "qualitative": 8
+        "pending": 4,
+        "qualitative": 10
       },
       "FY2026Q2": {
         "n_graded": 0,
@@ -546,6 +560,22 @@
         "n_graded": 1,
         "beat": 0,
         "met": 1,
+        "missed": 0,
+        "pending": 0
+      }
+    },
+    "LLY": {
+      "our_calls": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 2,
+        "qualitative": 2
+      },
+      "guidance": {
+        "n_graded": 0,
+        "beat": 0,
+        "met": 0,
         "missed": 0,
         "pending": 0
       }
