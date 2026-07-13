@@ -394,3 +394,60 @@ green after Gate 3 deletes the dummies (it does; ids don't collide).
   included per plan; Gate 3 deletes them).
 - Universe order used (alphabetical, frozen 10): AMD, AMZN, AVGO, CRM, CRWD done this
   session; **S7 owns DE, LLY, MU, NVDA, PANW** for batch 2, plus the guidance backfill.
+
+## [S7] Initiations batch 2 + guidance backfill (all 10 names) — 2026-07-13
+
+**Did:** (1) Initiated the remaining 5 tickers alphabetically — **NVDA, DE, LLY, MU,
+PANW** (`notes/<T>/2026-07-13_initiation.md`, `models/<T>/<T>_model_2026-07-13.xlsx`,
+`scorecard/calls/<T>.jsonl`), same pattern as S6: each from its latest 10-K (business/
+segment/MD&A) + latest earnings 8-K (EX-99.1, current-quarter actuals + forward
+guidance), with 2 forward numeric calls (graded vs the company's own next-print guidance)
++ 2 qualitative theses, all `call_type: initiation`. Ran the S3 adversarial fact-check
+Workflow gate on every note (13–17 claims each). All 10 universe names now have an
+initiation. (2) Backfilled `scorecard/guidance/` for **ALL 10 names** — 74 records from
+the last ~5 earnings 8-Ks per name (guidance in quarter N's release, actual in N+1's),
+every figure re-verified verbatim against its source release. Committed as 7× `[S7]` per
+completed ticker (initiations) + 2× `[S7]` guidance commits; pushed after each.
+
+**The fact-check gate earned its keep again — and the WebFetch wrong-document quirk
+(S3/S6) recurred:** DE's ag-cycle qualitative call and two PANW Q3 prose figures "failed"
+first pass because verifier agents fetched 10-K content for a cited 8-K URL. All were
+FALSE fails — confirmed by (a) parallel claims on the same URL that passed and (b)
+isolated single-agent re-runs that fetched the right doc. **One GENUINE fix:** PANW's
+FY2025 RPO prose asserted a prior-year "$12.7B (+24%)" comparative not in the cited
+FY2025 10-K → removed (kept the sourced $15.8B + ~$7.0B-within-12-months). Details in
+each note's `fact_check.notes`. NVDA/LLY/MU passed clean first-pass.
+
+**Next session (S8 + Merge Gate 3) must know:**
+- **Guidance backfill is real and complete (74 records, 10 shards).** score.py:
+  `beat 59 / met 12 / missed 0 / 3 pending`. The 0-missed / strong-beat skew is the real
+  AI+pharma up-cycle over this window (Feb-2025→mid-2026), NOT a bug — but see the caveat.
+- **METHODOLOGY CAVEAT for S10's methodology paper (and any "management is always right"
+  read of the scorecard):** CRM/CRWD/PANW **non-GAAP EPS guides EXCLUDE strategic-
+  investment gains that the reported actuals INCLUDE** (e.g. CRM Q4 FY26 actual $3.81
+  includes ~$0.67 of investment gains vs a $3.02–3.04 guide). Both sides are labeled
+  "non-GAAP" so score.py's cross-basis guard does not fire — this is a *within-non-GAAP*
+  definitional gap that inflates software-name EPS "beats." **Revenue beats are clean.**
+  Consider excluding investment gains from the EPS actual, or footnoting it, in the
+  methodology. AMD's Q4'25 57% non-GAAP GM is REAL (one-time MI308 reserve release; ex
+  that, ~55%).
+- **Annual guiders (DE, LLY) yield fewer completed pairs by design** — they guide full-
+  year (not next-quarter), so only the completed FY (FY2025) has an actual; the open FY
+  (FY2026) is recorded as a `pending` guidance record (no `actual`). DE=2 records, LLY=4.
+- **S4 dummy guidance rows fully replaced** (AMD/AMZN/CRWD/NVDA/DE shards overwritten with
+  real data). S4 dummy CALL rows still live in `scorecard/calls/{DE,NVDA}.jsonl` alongside
+  my real initiation calls (I appended, matching S6's CRWD handling) — **Merge Gate 3
+  should delete all remaining `"dummy": true` rows** (calls: DE, NVDA, + S6's AMD/AMZN/
+  CRWD/NVDA dummy calls; guidance: none left). `score.py --exclude-dummy` confirms real-
+  only totals.
+- **Note-drafting + guidance-extraction were parallelized via subagents** (one per ticker;
+  each self-verified figures against the cached release text, I re-verified independently
+  against `data/raw`-equivalent local dumps and via the fact-check gate). All source docs
+  are cached under `data/raw/` (gitignored) — reproducible.
+- **build_model quirks surfaced on real names (documented in each note's Model section, not
+  fixed — see `gate2_build_model_followups.md`):** NVDA/PANW pre-split EPS retained
+  (earliest-filed anchoring; NVDA 10:1 Jun-2024, PANW 2:1 Dec-2024); DE Gross/Operating
+  margin rows render a spurious `0.0%` off blank stale-tag cells (gate2 item 1) — flagged
+  in the DE note as "ignore the 0.0% margin rows." MU model built clean.
+- Universe order (alphabetical 10): S6 did AMD/AMZN/AVGO/CRM/CRWD; **S7 did DE/LLY/MU/NVDA/
+  PANW + the full guidance backfill.** Phase 3/4 initiation+backfill work is DONE.
