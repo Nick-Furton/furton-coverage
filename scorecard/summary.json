@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-07-13T21:35:38+00:00",
+  "generated_at": "2026-07-13T21:41:19+00:00",
   "totals": {
-    "call_records": 38,
+    "call_records": 42,
     "guidance_records": 8,
     "calls_graded": 4,
-    "calls_pending": 17,
-    "calls_qualitative": 17,
+    "calls_pending": 19,
+    "calls_qualitative": 19,
     "guidance_graded": 6,
     "guidance_pending": 2,
-    "tickers": 8
+    "tickers": 9
   },
   "our_calls": {
     "overall": {
       "n_graded": 4,
       "hits": 4,
       "hit_rate": 1.0,
-      "pending": 17,
-      "qualitative": 17
+      "pending": 19,
+      "qualitative": 19
     },
     "by_call_type": {
       "flash": {
@@ -30,8 +30,8 @@
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
-        "pending": 16,
-        "qualitative": 16
+        "pending": 18,
+        "qualitative": 18
       },
       "preview": {
         "n_graded": 2,
@@ -112,6 +112,13 @@
         "pending": 0,
         "qualitative": 1
       },
+      "dram_pricing_cycle_qualitative": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 0,
+        "qualitative": 1
+      },
       "ending_arr": {
         "n_graded": 1,
         "hits": 1,
@@ -148,6 +155,13 @@
         "qualitative": 0
       },
       "gross_margin_trajectory_qualitative": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 0,
+        "qualitative": 1
+      },
+      "hbm_ai_memory_demand_qualitative": {
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
@@ -193,7 +207,7 @@
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
-        "pending": 2,
+        "pending": 3,
         "qualitative": 0
       },
       "non_gaap_operating_margin": {
@@ -228,7 +242,7 @@
         "n_graded": 1,
         "hits": 1,
         "hit_rate": 1.0,
-        "pending": 6,
+        "pending": 7,
         "qualitative": 0
       },
       "semiconductor_ai_revenue_qualitative": {
@@ -252,7 +266,7 @@
         "hits": 1,
         "hit_rate": 1.0,
         "pending": 4,
-        "qualitative": 10
+        "qualitative": 12
       },
       "FY2026Q2": {
         "n_graded": 0,
@@ -262,6 +276,13 @@
         "qualitative": 0
       },
       "FY2026Q3": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 2,
+        "qualitative": 0
+      },
+      "FY2026Q4": {
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
@@ -565,6 +586,22 @@
       }
     },
     "LLY": {
+      "our_calls": {
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 2,
+        "qualitative": 2
+      },
+      "guidance": {
+        "n_graded": 0,
+        "beat": 0,
+        "met": 0,
+        "missed": 0,
+        "pending": 0
+      }
+    },
+    "MU": {
       "our_calls": {
         "n_graded": 0,
         "hits": 0,
