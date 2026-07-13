@@ -72,3 +72,12 @@ anything — it defines the phases, session pairings, and path ownership.
 - EDGAR is a public no-auth HTTP API → works fully headless in scheduled/cloud runs (unlike a
   vendor connector). Lean into that for automation.
 - `gh` is installed and authed as Nick-Furton.
+
+## Status board — UPDATE AT END OF SESSION
+
+There is a shared cross-project status board at `..\status-dashboard.html` (open the file
+directly — no server). Whenever you complete meaningful work on Furton Coverage (close a gate,
+finish a session/phase, change metrics/next-actions/blockers), update the `DATA` object for the
+`coverage` project inside that file before ending: bump `lastUpdated`, adjust the phase `status`,
+`percent`, `currentPhase`, `metrics`, `nextActions`, `blockers`, and add a `milestones` line. The
+file has a `HOW TO UPDATE` banner in its `<script>`.
