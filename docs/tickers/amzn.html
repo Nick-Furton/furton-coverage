@@ -61,18 +61,22 @@ document.querySelector('.nav-menu .sheet')?.addEventListener('click',e=>{if(e.ta
   <div class="wrap">
     <div class="tiles reveal">
   <div class="tile"><div class="k">Next print</div><div class="v" style="font-size:16px">Jul 30, 2026 · after market · confirmed</div><div class="s">refresh_calendar.py · cited source</div></div>
-  <div class="tile"><div class="k">Our record here</div><div class="v">1/2</div><div class="s">hits / graded · 1 pending</div></div>
-  <div class="tile"><div class="k">Mgmt vs own guide</div><div class="v">0–1–1</div><div class="s">beat–met–missed</div></div>
+  <div class="tile"><div class="k">Our record here</div><div class="v">0/0</div><div class="s">hits / graded · 2 pending</div></div>
+  <div class="tile"><div class="k">Mgmt vs own guide</div><div class="v">6–2–0</div><div class="s">beat–met–missed</div></div>
   <div class="tile"><div class="k">Guidance basis</div><div class="v" style="font-size:16px">GAAP</div><div class="s">how this company guides</div></div>
 </div>
     <div class="grid2" style="margin-top:26px">
       <div class="card reveal">
         <h3>Note timeline</h3>
-        <div class="fempty">No notes yet — coverage initiates with this name’s first cycle.</div>
+        <div class="timeline"><div class="tl-item">
+  <div class="tl-date">Jul 11, 2026 · Initiation</div>
+  <div class="tl-title"><a href="../notes/AMZN/2026-07-11_initiation.html">AMZN FY2025 initiation</a></div>
+  <div class="tl-sub">Amazon organizes operations into three segments: North America (retail + advertising + subscriptions in North America), International (same,…</div>
+</div></div>
       </div>
       <div class="card reveal">
         <h3>The model</h3>
-        <p class="note" style="margin-top:0">Excel model publishes with this name’s initiation note.</p>
+        <a class="btn btn-ghost" href="../models/AMZN/AMZN_model_2026-07-11.xlsx" download>Download the Excel model <span class="arr">↓</span></a><p class="note">AMZN_model_2026-07-11.xlsx — built from XBRL company facts by build_model.py. Headline financials from companyfacts; segment/KPI lines from the 8-K press release.</p>
         <h3 style="margin-top:26px">Fiscal profile</h3>
         <p class="note" style="margin-top:0">FY ends December · typically reports February, April, July, October · guides on a gaap basis · Dow 30 member.</p>
       </div>
@@ -86,14 +90,14 @@ document.querySelector('.nav-menu .sheet')?.addEventListener('click',e=>{if(e.ta
     </div>
     <div class="card reveal"><div class="tscroll"><table>
 <thead><tr><th>Metric</th><th>Period</th><th>From</th><th>Our call</th><th>Actual</th><th>Result</th></tr></thead>
-<tbody><tr><td>operating income <span class="badge dim">sample</span></td><td>FY2026Q4</td><td>review</td><td style='white-space:normal'>$21,000M–$25,000M</td><td>—</td><td><span class="chip pending">PENDING</span></td></tr><tr><td>aws revenue <span class="badge dim">sample</span></td><td>FY2026Q3</td><td>flash</td><td style='white-space:normal'>$30,000M–$32,000M</td><td>$30,900M</td><td><span class="chip hit">HIT</span></td></tr><tr><td>net sales <span class="badge dim">sample</span></td><td>FY2026Q3</td><td>preview</td><td style='white-space:normal'>BEAT vs $194,000M–$199,000M</td><td>$196,300M</td><td><span class="chip miss">MISS</span></td></tr></tbody></table></div></div>
+<tbody><tr><td>net sales</td><td>FY2026Q2</td><td>initiation</td><td style='white-space:normal'>BEAT vs $194,000M–$199,000M</td><td>—</td><td><span class="chip pending">PENDING</span></td></tr><tr><td>operating income</td><td>FY2026Q2</td><td>initiation</td><td style='white-space:normal'>MET vs $20,000M–$24,000M</td><td>—</td><td><span class="chip pending">PENDING</span></td></tr><tr><td>aws operating margin qualitative</td><td>FY2026</td><td>initiation</td><td style='white-space:normal'>Our own forward view, not a projection the FY2025 10-K itself makes: AWS operating margin stays under pressure through F…</td><td>—</td><td><span class="chip qual">QUALITATIVE</span></td></tr><tr><td>opex discipline qualitative</td><td>FY2026</td><td>initiation</td><td style='white-space:normal'>Our own forward view: consolidated operating margin expansion stalls or reverses in Q1 FY2026 (the only FY2026 quarter m…</td><td>—</td><td><span class="chip qual">QUALITATIVE</span></td></tr></tbody></table></div></div>
     <div class="sec-head reveal" style="margin-top:44px"><h2>Guidance <em>tracker</em></h2>
       <p class="sec-lead">Management's own record: what AMZN guided in its 8-K press releases, versus what it later reported.</p>
     </div>
     <div class="card reveal"><div class="tscroll"><table>
 <thead><tr><th>Metric</th><th>Period</th><th>Guided</th><th>Actual</th><th>Outcome</th><th>Source</th></tr></thead>
-<tbody><tr><td>net sales <span class="badge dim">sample</span></td><td>FY2026Q4</td><td style='white-space:normal'>$224,000M–$232,000M</td><td>—</td><td><span class="chip pending">PENDING</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000123/ex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>net sales <span class="badge dim">sample</span></td><td>FY2026Q3</td><td style='white-space:normal'>$194,000M–$199,000M</td><td>$196,300M</td><td><span class="chip met">MET</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000098/ex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>operating income <span class="badge dim">sample</span></td><td>FY2026Q3</td><td style='white-space:normal'>$20,000M–$24,000M</td><td>$17,400M</td><td><span class="chip missed">MISSED</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000098/ex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr></tbody></table></div></div>
-    <p class="note"><b style="color:var(--warn)">Sample data:</b> rows marked <span class="badge dim">sample</span> are schema-validation dummies, deleted at first real publish.</p>
+<tbody><tr><td>net sales</td><td>FY2025Q2</td><td style='white-space:normal'>$159,000M–$164,000M</td><td>$167,700M</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872425000034/amzn-20250331xex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>operating income</td><td>FY2025Q2</td><td style='white-space:normal'>$13,000M–$17,500M</td><td>$19,200M</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872425000034/amzn-20250331xex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>net sales</td><td>FY2025Q3</td><td style='white-space:normal'>$174,000M–$179,500M</td><td>$180,200M</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872425000084/amzn-20250630xex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>operating income</td><td>FY2025Q3</td><td style='white-space:normal'>$15,500M–$20,500M</td><td>$17,400M</td><td><span class="chip met">MET</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872425000084/amzn-20250630xex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>net sales</td><td>FY2025Q4</td><td style='white-space:normal'>$206,000M–$213,000M</td><td>$213,400M</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872425000121/amzn-20250930xex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>operating income</td><td>FY2025Q4</td><td style='white-space:normal'>$21,000M–$26,000M</td><td>$25,000M</td><td><span class="chip met">MET</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872425000121/amzn-20250930xex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>net sales</td><td>FY2026Q1</td><td style='white-space:normal'>$173,500M–$178,500M</td><td>$181,500M</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000002/amzn-20251231xex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>operating income</td><td>FY2026Q1</td><td style='white-space:normal'>$16,500M–$21,500M</td><td>$23,900M</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000002/amzn-20251231xex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr></tbody></table></div></div>
+    
   </div>
 </section>
 
@@ -121,7 +125,7 @@ document.querySelector('.nav-menu .sheet')?.addEventListener('click',e=>{if(e.ta
       </div>
     </div>
     <div class="foot-disclaimer">
-      Furton Coverage is an educational research project, not investment advice. All financial figures are sourced from public SEC EDGAR filings (XBRL company facts and 8-K press releases) and every published call is timestamped and graded against management's own written guidance — misses included. Nothing here is a recommendation or an offer to buy or sell any security. Generated 2026-07-11 23:20 UTC by scripts/build_site.py. © 2026 Furton Coverage.
+      Furton Coverage is an educational research project, not investment advice. All financial figures are sourced from public SEC EDGAR filings (XBRL company facts and 8-K press releases) and every published call is timestamped and graded against management's own written guidance — misses included. Nothing here is a recommendation or an offer to buy or sell any security. Generated 2026-07-13 22:33 UTC by scripts/build_site.py. © 2026 Furton Coverage.
     </div>
   </div>
 </footer>

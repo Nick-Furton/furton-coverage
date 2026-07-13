@@ -61,18 +61,22 @@ document.querySelector('.nav-menu .sheet')?.addEventListener('click',e=>{if(e.ta
   <div class="wrap">
     <div class="tiles reveal">
   <div class="tile"><div class="k">Next print</div><div class="v" style="font-size:16px">Sep 29, 2026 · after market · confirmed</div><div class="s">refresh_calendar.py · cited source</div></div>
-  <div class="tile"><div class="k">Our record here</div><div class="v">0/0</div><div class="s">hits / graded · 0 pending</div></div>
-  <div class="tile"><div class="k">Mgmt vs own guide</div><div class="v">0–0–0</div><div class="s">beat–met–missed</div></div>
+  <div class="tile"><div class="k">Our record here</div><div class="v">0/0</div><div class="s">hits / graded · 2 pending</div></div>
+  <div class="tile"><div class="k">Mgmt vs own guide</div><div class="v">12–0–0</div><div class="s">beat–met–missed</div></div>
   <div class="tile"><div class="k">Guidance basis</div><div class="v" style="font-size:16px">NON-GAAP</div><div class="s">how this company guides</div></div>
 </div>
     <div class="grid2" style="margin-top:26px">
       <div class="card reveal">
         <h3>Note timeline</h3>
-        <div class="fempty">No notes yet — coverage initiates with this name’s first cycle.</div>
+        <div class="timeline"><div class="tl-item">
+  <div class="tl-date">Jul 13, 2026 · Initiation</div>
+  <div class="tl-title"><a href="../notes/MU/2026-07-13_initiation.html">MU FY2025 initiation</a></div>
+  <div class="tl-sub">Micron designs and manufactures memory and storage products built on its DRAM, NAND, and NOR semiconductor technologies. It reports four business…</div>
+</div></div>
       </div>
       <div class="card reveal">
         <h3>The model</h3>
-        <p class="note" style="margin-top:0">Excel model publishes with this name’s initiation note.</p>
+        <a class="btn btn-ghost" href="../models/MU/MU_model_2026-07-13.xlsx" download>Download the Excel model <span class="arr">↓</span></a><p class="note">MU_model_2026-07-13.xlsx — built from XBRL company facts by build_model.py. Headline financials from companyfacts; segment/KPI lines from the 8-K press release.</p>
         <h3 style="margin-top:26px">Fiscal profile</h3>
         <p class="note" style="margin-top:0">FY ends August/September · typically reports March, June, September, December · guides on a non-gaap basis.</p>
       </div>
@@ -84,11 +88,15 @@ document.querySelector('.nav-menu .sheet')?.addEventListener('click',e=>{if(e.ta
     <div class="sec-head reveal"><h2>Call <em>record</em></h2>
       <p class="sec-lead">Every call we've published on MU, graded against management's written guidance. Pending calls grade when the print lands.</p>
     </div>
-    <div class="card reveal"><div class="fempty">No calls recorded yet.</div></div>
+    <div class="card reveal"><div class="tscroll"><table>
+<thead><tr><th>Metric</th><th>Period</th><th>From</th><th>Our call</th><th>Actual</th><th>Result</th></tr></thead>
+<tbody><tr><td>revenue</td><td>FY2026Q4</td><td>initiation</td><td style='white-space:normal'>BEAT vs $49,000M–$51,000M</td><td>—</td><td><span class="chip pending">PENDING</span></td></tr><tr><td>non gaap gross margin</td><td>FY2026Q4</td><td>initiation</td><td style='white-space:normal'>86% ±1</td><td>—</td><td><span class="chip pending">PENDING</span></td></tr><tr><td>hbm ai memory demand qualitative</td><td>FY2026</td><td>initiation</td><td style='white-space:normal'>Our own forward view, not a projection the filing itself makes: we expect HBM and AI-driven data-center memory demand to…</td><td>—</td><td><span class="chip qual">QUALITATIVE</span></td></tr><tr><td>dram pricing cycle qualitative</td><td>FY2026</td><td>initiation</td><td style='white-space:normal'>Our own forward view, not a projection the filing itself makes: we expect DRAM to stay the primary earnings engine and D…</td><td>—</td><td><span class="chip qual">QUALITATIVE</span></td></tr></tbody></table></div></div>
     <div class="sec-head reveal" style="margin-top:44px"><h2>Guidance <em>tracker</em></h2>
       <p class="sec-lead">Management's own record: what MU guided in its 8-K press releases, versus what it later reported.</p>
     </div>
-    <div class="card reveal"><div class="fempty">No guidance history yet — backfilled from the last four 8-Ks in Phase 4.</div></div>
+    <div class="card reveal"><div class="tscroll"><table>
+<thead><tr><th>Metric</th><th>Period</th><th>Guided</th><th>Actual</th><th>Outcome</th><th>Source</th></tr></thead>
+<tbody><tr><td>revenue</td><td>FY2026Q3</td><td style='white-space:normal'>$33,500M ±750</td><td>$41,456M</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312526000004/a2026q2ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>non gaap gross margin</td><td>FY2026Q3</td><td style='white-space:normal'>81% ±1</td><td>84.9%</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312526000004/a2026q2ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>non gaap eps</td><td>FY2026Q3</td><td style='white-space:normal'>$19.15 ±0.4</td><td>$25.11</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312526000004/a2026q2ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>revenue</td><td>FY2026Q2</td><td style='white-space:normal'>$18,700M ±400</td><td>$23,860M</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312525000044/a2026q1ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>non gaap gross margin</td><td>FY2026Q2</td><td style='white-space:normal'>68% ±1</td><td>74.9%</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312525000044/a2026q1ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>non gaap eps</td><td>FY2026Q2</td><td style='white-space:normal'>$8.42 ±0.2</td><td>$12.2</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312525000044/a2026q1ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>revenue</td><td>FY2026Q1</td><td style='white-space:normal'>$12,500M ±300</td><td>$13,643M</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312525000024/a2025q4ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>non gaap gross margin</td><td>FY2026Q1</td><td style='white-space:normal'>51.5% ±1</td><td>56.8%</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312525000024/a2025q4ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>non gaap eps</td><td>FY2026Q1</td><td style='white-space:normal'>$3.75 ±0.15</td><td>$4.78</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312525000024/a2025q4ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>revenue</td><td>FY2025Q4</td><td style='white-space:normal'>$10,700M ±300</td><td>$11,315M</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312525000019/a2025q3ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>non gaap gross margin</td><td>FY2025Q4</td><td style='white-space:normal'>42% ±1</td><td>45.7%</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312525000019/a2025q3ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>non gaap eps</td><td>FY2025Q4</td><td style='white-space:normal'>$2.5 ±0.15</td><td>$3.03</td><td><span class="chip beat">BEAT</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312525000019/a2025q3ex991-pressrelease.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr></tbody></table></div></div>
     
   </div>
 </section>
@@ -117,7 +125,7 @@ document.querySelector('.nav-menu .sheet')?.addEventListener('click',e=>{if(e.ta
       </div>
     </div>
     <div class="foot-disclaimer">
-      Furton Coverage is an educational research project, not investment advice. All financial figures are sourced from public SEC EDGAR filings (XBRL company facts and 8-K press releases) and every published call is timestamped and graded against management's own written guidance — misses included. Nothing here is a recommendation or an offer to buy or sell any security. Generated 2026-07-11 23:20 UTC by scripts/build_site.py. © 2026 Furton Coverage.
+      Furton Coverage is an educational research project, not investment advice. All financial figures are sourced from public SEC EDGAR filings (XBRL company facts and 8-K press releases) and every published call is timestamped and graded against management's own written guidance — misses included. Nothing here is a recommendation or an offer to buy or sell any security. Generated 2026-07-13 22:33 UTC by scripts/build_site.py. © 2026 Furton Coverage.
     </div>
   </div>
 </footer>

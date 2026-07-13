@@ -61,18 +61,22 @@ document.querySelector('.nav-menu .sheet')?.addEventListener('click',e=>{if(e.ta
   <div class="wrap">
     <div class="tiles reveal">
   <div class="tile"><div class="k">Next print</div><div class="v" style="font-size:16px">Aug 20, 2026 · before market · estimated</div><div class="s">refresh_calendar.py · cited source</div></div>
-  <div class="tile"><div class="k">Our record here</div><div class="v">1/1</div><div class="s">hits / graded · 0 pending</div></div>
+  <div class="tile"><div class="k">Our record here</div><div class="v">0/0</div><div class="s">hits / graded · 2 pending</div></div>
   <div class="tile"><div class="k">Mgmt vs own guide</div><div class="v">0–1–0</div><div class="s">beat–met–missed</div></div>
   <div class="tile"><div class="k">Guidance basis</div><div class="v" style="font-size:16px">GAAP</div><div class="s">how this company guides</div></div>
 </div>
     <div class="grid2" style="margin-top:26px">
       <div class="card reveal">
         <h3>Note timeline</h3>
-        <div class="fempty">No notes yet — coverage initiates with this name’s first cycle.</div>
+        <div class="timeline"><div class="tl-item">
+  <div class="tl-date">Jul 13, 2026 · Initiation</div>
+  <div class="tl-title"><a href="../notes/DE/2026-07-13_initiation.html">DE FY2025 initiation</a></div>
+  <div class="tl-sub">Deere is a global leader in agricultural, turf, construction, and forestry equipment, managed through four operating segments: Production &amp;…</div>
+</div></div>
       </div>
       <div class="card reveal">
         <h3>The model</h3>
-        <p class="note" style="margin-top:0">Excel model publishes with this name’s initiation note.</p>
+        <a class="btn btn-ghost" href="../models/DE/DE_model_2026-07-13.xlsx" download>Download the Excel model <span class="arr">↓</span></a><p class="note">DE_model_2026-07-13.xlsx — built from XBRL company facts by build_model.py. Headline financials from companyfacts; segment/KPI lines from the 8-K press release.</p>
         <h3 style="margin-top:26px">Fiscal profile</h3>
         <p class="note" style="margin-top:0">FY ends October · typically reports February, May, August, November · guides on a gaap basis.</p>
       </div>
@@ -86,14 +90,14 @@ document.querySelector('.nav-menu .sheet')?.addEventListener('click',e=>{if(e.ta
     </div>
     <div class="card reveal"><div class="tscroll"><table>
 <thead><tr><th>Metric</th><th>Period</th><th>From</th><th>Our call</th><th>Actual</th><th>Result</th></tr></thead>
-<tbody><tr><td>net income <span class="badge dim">sample</span></td><td>FY2026</td><td>review</td><td style='white-space:normal'>$4,750M–$5,250M</td><td>$5,100M</td><td><span class="chip hit">HIT</span></td></tr></tbody></table></div></div>
+<tbody><tr><td>net income</td><td>FY2026</td><td>initiation</td><td style='white-space:normal'>MET vs $4,500M–$5,000M</td><td>—</td><td><span class="chip pending">PENDING</span></td></tr><tr><td>construction forestry net sales growth</td><td>FY2026</td><td>initiation</td><td style='white-space:normal'>BEAT vs 20% ±0</td><td>—</td><td><span class="chip pending">PENDING</span></td></tr><tr><td>ag cycle trough qualitative</td><td>FY2026</td><td>initiation</td><td style='white-space:normal'>Our own forward view, not a projection the filings themselves make: we expect Deere&#x27;s diversified portfolio to cushion t…</td><td>—</td><td><span class="chip qual">QUALITATIVE</span></td></tr><tr><td>trade and ag cycle risk qualitative</td><td>FY2026</td><td>initiation</td><td style='white-space:normal'>Our own forward view, not a projection the filings themselves make: we see the two dominant swing factors to Deere&#x27;s FY2…</td><td>—</td><td><span class="chip qual">QUALITATIVE</span></td></tr></tbody></table></div></div>
     <div class="sec-head reveal" style="margin-top:44px"><h2>Guidance <em>tracker</em></h2>
       <p class="sec-lead">Management's own record: what DE guided in its 8-K press releases, versus what it later reported.</p>
     </div>
     <div class="card reveal"><div class="tscroll"><table>
 <thead><tr><th>Metric</th><th>Period</th><th>Guided</th><th>Actual</th><th>Outcome</th><th>Source</th></tr></thead>
-<tbody><tr><td>net income <span class="badge dim">sample</span></td><td>FY2026</td><td style='white-space:normal'>$4,750M–$5,250M</td><td>$5,100M</td><td><span class="chip met">MET</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/315189/000031518926000071/ex991.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr></tbody></table></div></div>
-    <p class="note"><b style="color:var(--warn)">Sample data:</b> rows marked <span class="badge dim">sample</span> are schema-validation dummies, deleted at first real publish.</p>
+<tbody><tr><td>net income</td><td>FY2025</td><td style='white-space:normal'>$4,750M–$5,250M</td><td>$5,027M</td><td><span class="chip met">MET</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/315189/000155837025011453/de-20250814xex99d1.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr><tr><td>net income</td><td>FY2026</td><td style='white-space:normal'>$4,500M–$5,000M</td><td>—</td><td><span class="chip pending">PENDING</span></td><td><a href="https://www.sec.gov/Archives/edgar/data/315189/000110465926064747/de-20260521xex99d1.htm" target="_blank" rel="noopener" style="color:var(--acc2)">8-K ↗</a></td></tr></tbody></table></div></div>
+    
   </div>
 </section>
 
@@ -121,7 +125,7 @@ document.querySelector('.nav-menu .sheet')?.addEventListener('click',e=>{if(e.ta
       </div>
     </div>
     <div class="foot-disclaimer">
-      Furton Coverage is an educational research project, not investment advice. All financial figures are sourced from public SEC EDGAR filings (XBRL company facts and 8-K press releases) and every published call is timestamped and graded against management's own written guidance — misses included. Nothing here is a recommendation or an offer to buy or sell any security. Generated 2026-07-11 23:20 UTC by scripts/build_site.py. © 2026 Furton Coverage.
+      Furton Coverage is an educational research project, not investment advice. All financial figures are sourced from public SEC EDGAR filings (XBRL company facts and 8-K press releases) and every published call is timestamped and graded against management's own written guidance — misses included. Nothing here is a recommendation or an offer to buy or sell any security. Generated 2026-07-13 22:33 UTC by scripts/build_site.py. © 2026 Furton Coverage.
     </div>
   </div>
 </footer>

@@ -582,7 +582,8 @@ COUNTDOWN_JS = """
 def build_home(base, stamp, roster, calendar, summary, notes) -> None:
     oc = summary.get("our_calls", {}).get("overall", {})
     ga = summary.get("guidance_accuracy", {}).get("overall", {})
-    dummy = summary.get("dummy", {}).get("included")
+    _d = summary.get("dummy", {})
+    dummy = bool(_d.get("included")) and (_d.get("call_records", 0) + _d.get("guidance_records", 0)) > 0
     sample = ' <span class="badge">sample data</span>' if dummy else ""
 
     events = sorted(
@@ -804,7 +805,8 @@ def build_scorecard(base, stamp, summary) -> None:
     overall = oc.get("overall", {})
     g_over = ga.get("overall", {})
     totals = summary.get("totals", {})
-    dummy = summary.get("dummy", {}).get("included")
+    _d = summary.get("dummy", {})
+    dummy = bool(_d.get("included")) and (_d.get("call_records", 0) + _d.get("guidance_records", 0)) > 0
 
     banner = ""
     if dummy:

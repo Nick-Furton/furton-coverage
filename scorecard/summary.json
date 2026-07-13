@@ -1,51 +1,30 @@
 {
-  "generated_at": "2026-07-13T22:07:10+00:00",
+  "generated_at": "2026-07-13T22:30:26+00:00",
   "totals": {
-    "call_records": 46,
+    "call_records": 40,
     "guidance_records": 74,
-    "calls_graded": 4,
-    "calls_pending": 21,
-    "calls_qualitative": 21,
+    "calls_graded": 0,
+    "calls_pending": 20,
+    "calls_qualitative": 20,
     "guidance_graded": 71,
     "guidance_pending": 3,
     "tickers": 10
   },
   "our_calls": {
     "overall": {
-      "n_graded": 4,
-      "hits": 4,
-      "hit_rate": 1.0,
-      "pending": 21,
-      "qualitative": 21
+      "n_graded": 0,
+      "hits": 0,
+      "hit_rate": null,
+      "pending": 20,
+      "qualitative": 20
     },
     "by_call_type": {
-      "flash": {
-        "n_graded": 1,
-        "hits": 1,
-        "hit_rate": 1.0,
-        "pending": 1,
-        "qualitative": 0
-      },
       "initiation": {
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
         "pending": 20,
         "qualitative": 20
-      },
-      "preview": {
-        "n_graded": 2,
-        "hits": 2,
-        "hit_rate": 1.0,
-        "pending": 0,
-        "qualitative": 0
-      },
-      "review": {
-        "n_graded": 1,
-        "hits": 1,
-        "hit_rate": 1.0,
-        "pending": 0,
-        "qualitative": 1
       }
     },
     "by_metric": {
@@ -98,13 +77,6 @@
         "pending": 0,
         "qualitative": 1
       },
-      "data_center_revenue": {
-        "n_graded": 0,
-        "hits": 0,
-        "hit_rate": null,
-        "pending": 0,
-        "qualitative": 1
-      },
       "data_center_revenue_growth_qualitative": {
         "n_graded": 0,
         "hits": 0,
@@ -119,18 +91,11 @@
         "pending": 0,
         "qualitative": 1
       },
-      "ending_arr": {
-        "n_graded": 1,
-        "hits": 1,
-        "hit_rate": 1.0,
-        "pending": 0,
-        "qualitative": 0
-      },
       "eps_adj": {
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
-        "pending": 3,
+        "pending": 2,
         "qualitative": 0
       },
       "gaap_operating_income_qualitative": {
@@ -153,13 +118,6 @@
         "hit_rate": null,
         "pending": 0,
         "qualitative": 1
-      },
-      "gross_margin": {
-        "n_graded": 1,
-        "hits": 1,
-        "hit_rate": 1.0,
-        "pending": 0,
-        "qualitative": 0
       },
       "gross_margin_trajectory_qualitative": {
         "n_graded": 0,
@@ -190,9 +148,9 @@
         "qualitative": 1
       },
       "net_income": {
-        "n_graded": 1,
-        "hits": 1,
-        "hit_rate": 1.0,
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
         "pending": 1,
         "qualitative": 0
       },
@@ -260,9 +218,9 @@
         "qualitative": 1
       },
       "revenue": {
-        "n_graded": 1,
-        "hits": 1,
-        "hit_rate": 1.0,
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
         "pending": 8,
         "qualitative": 0
       },
@@ -283,9 +241,9 @@
     },
     "over_time": {
       "FY2026": {
-        "n_graded": 1,
-        "hits": 1,
-        "hit_rate": 1.0,
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
         "pending": 4,
         "qualitative": 14
       },
@@ -317,30 +275,16 @@
         "pending": 1,
         "qualitative": 6
       },
-      "FY2027Q1": {
-        "n_graded": 2,
-        "hits": 2,
-        "hit_rate": 1.0,
-        "pending": 0,
-        "qualitative": 1
-      },
       "FY2027Q2": {
-        "n_graded": 1,
-        "hits": 1,
-        "hit_rate": 1.0,
-        "pending": 5,
-        "qualitative": 0
-      },
-      "FY2027Q3": {
         "n_graded": 0,
         "hits": 0,
         "hit_rate": null,
-        "pending": 1,
+        "pending": 5,
         "qualitative": 0
       }
     },
     "calibration": {
-      "scored_calls_with_confidence": 4,
+      "scored_calls_with_confidence": 0,
       "bins": [
         {
           "lo": 0.0,
@@ -393,10 +337,10 @@
         {
           "lo": 0.6,
           "hi": 0.7,
-          "n": 3,
-          "hits": 3,
-          "empirical_rate": 1.0,
-          "mean_confidence": 0.6333
+          "n": 0,
+          "hits": 0,
+          "empirical_rate": null,
+          "mean_confidence": null
         },
         {
           "lo": 0.7,
@@ -409,10 +353,10 @@
         {
           "lo": 0.8,
           "hi": 0.9,
-          "n": 1,
-          "hits": 1,
-          "empirical_rate": 1.0,
-          "mean_confidence": 0.8
+          "n": 0,
+          "hits": 0,
+          "empirical_rate": null,
+          "mean_confidence": null
         },
         {
           "lo": 0.9,
@@ -423,7 +367,7 @@
           "mean_confidence": null
         }
       ],
-      "note": "Compare mean_confidence to empirical_rate within each decile."
+      "note": "Reliability curve over calls carrying a numeric 'confidence'. Empty until notes start attaching confidences."
     }
   },
   "guidance_accuracy": {
@@ -646,10 +590,10 @@
     },
     "CRWD": {
       "our_calls": {
-        "n_graded": 1,
-        "hits": 1,
-        "hit_rate": 1.0,
-        "pending": 3,
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "pending": 2,
         "qualitative": 2
       },
       "guidance": {
@@ -662,9 +606,9 @@
     },
     "DE": {
       "our_calls": {
-        "n_graded": 1,
-        "hits": 1,
-        "hit_rate": 1.0,
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
         "pending": 2,
         "qualitative": 2
       },
@@ -710,11 +654,11 @@
     },
     "NVDA": {
       "our_calls": {
-        "n_graded": 2,
-        "hits": 2,
-        "hit_rate": 1.0,
+        "n_graded": 0,
+        "hits": 0,
+        "hit_rate": null,
         "pending": 2,
-        "qualitative": 3
+        "qualitative": 2
       },
       "guidance": {
         "n_graded": 8,
@@ -743,8 +687,10 @@
   },
   "dummy": {
     "included": true,
-    "call_records": 6,
+    "call_records": 0,
     "guidance_records": 0
   },
-  "warnings": []
+  "warnings": [
+    "no calls graded yet -- all outstanding calls are pending an actual"
+  ]
 }
